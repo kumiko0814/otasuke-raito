@@ -1,0 +1,1264 @@
+<title>おたすけ らいと君</title>
+<style>
+:root{--bg:#f7eef2;--paper:#fff;--ink:#4f454e;--plum:#574a58;--sub:#7d6d79;--line:#f3e3ec;--pink:#f0a2c5;--pinkd:#c66f96;--lav:#C99BE8;--lavd:#9E77D6;--grad:linear-gradient(135deg,#F5A6C8,#B98BEA);--shadow:0 12px 28px -18px rgba(87,74,88,.35);--soft:#fff7fa;--app:linear-gradient(180deg,#fdf1f4 0%,#fbe9ee 55%,#f3f0f7 100%);--okbg:#e9f5ee;--okfg:#3f7a57}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241c26;--paper:#2f2632;--ink:#f1e8ee;--plum:#f3e9f0;--sub:#b9a9b5;--line:#443a48;--soft:#3a3040;--app:linear-gradient(180deg,#2a2130,#241c26);--shadow:0 12px 28px -18px rgba(0,0,0,.6);--okbg:#25382c;--okfg:#9fd6b2}}
+:root[data-theme="dark"]{--bg:#241c26;--paper:#2f2632;--ink:#f1e8ee;--plum:#f3e9f0;--sub:#b9a9b5;--line:#443a48;--soft:#3a3040;--app:linear-gradient(180deg,#2a2130,#241c26);--shadow:0 12px 28px -18px rgba(0,0,0,.6);--okbg:#25382c;--okfg:#9fd6b2}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg)}
+body{background:var(--app);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","YuGothic","游ゴシック","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;line-height:1.75;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+.app{max-width:560px;margin:0 auto;padding-block:14px 110px;padding-inline:16px}
+.hud{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.hud img{height:22px;width:auto}.hud b{color:var(--plum);font-size:14px}.hud small{color:var(--sub);font-size:11px;display:block;font-weight:700}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow);margin-top:12px}
+.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}
+.bubble{position:relative;flex:1;min-width:0;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:10px 12px;font-size:13.5px}
+.bubble:before{content:"";position:absolute;left:-7px;top:16px;width:12px;height:12px;background:var(--soft);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.buddy{width:56px;height:56px;flex:none}.buddy svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{border:1.5px solid var(--line);background:var(--paper);color:var(--plum);border-radius:14px;padding:11px;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+.seg button.on{background:var(--grad);color:#fff;border-color:transparent}
+label{display:block;font-size:12px;font-weight:800;color:var(--plum);margin:10px 0 4px}
+label em{font-style:normal;font-weight:700;color:var(--sub);font-size:11px;margin-left:4px}
+input,select,textarea{width:100%;min-width:0;font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink)}
+textarea{min-height:64px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g2>div{min-width:0}@media(max-width:420px){.g2{grid-template-columns:1fr}}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.g3>div{min-width:0}.g3 label{margin-top:6px}
+.sub{font-size:12px;color:var(--sub);margin-top:4px}
+.meas{margin-top:10px;padding:10px 12px;border:1.5px dashed var(--pink);border-radius:16px;background:var(--soft)}
+.meas b{font-size:12.5px;color:var(--pinkd)}
+.cta{display:block;width:100%;margin-top:14px;text-align:center;font-weight:800;color:#fff;background:var(--grad);border:0;border-radius:999px;padding:14px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 22px -12px rgba(185,139,234,.7)}
+.cta:disabled{opacity:.55;cursor:default}
+.ghost{background:var(--paper);color:var(--pinkd);border:1.5px solid var(--pink);box-shadow:none}
+.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:800;border-radius:999px;padding:4px 10px;background:#fbe9ee;color:#c66f96;white-space:nowrap}
+.pill.lav{background:#efe6f8;color:#7d5cb0}.pill.ok{background:var(--okbg);color:var(--okfg)}
+.res h3{font-size:13px;color:var(--plum);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 6px}.res h3:first-child{margin-top:0}
+.res h3 .tools{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.copy{font:inherit;font-size:11.5px;font-weight:800;color:var(--pinkd);background:var(--paper);border:1.5px solid var(--pink);border-radius:999px;padding:4px 10px;cursor:pointer;white-space:nowrap}
+.box{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13.5px;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+.cnt{font-size:11px;color:var(--sub);font-weight:700}
+.ex{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-top:1px dashed var(--line);font-size:13px}.ex:first-child{border-top:0}
+.ex b{flex:none;color:var(--plum);font-variant-numeric:tabular-nums;min-width:68px}.ex span{min-width:0;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:12.5px;font-weight:700;color:var(--plum);background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--grad);color:#fff;border-color:transparent}
+.check{font-size:13px;padding:6px 0;border-top:1px dashed var(--line)}.check:first-child{border-top:0}
+.note{font-size:11.5px;color:var(--sub);margin-top:8px}
+.note.strong{color:var(--pinkd);font-weight:800}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.btns .cta{margin-top:0;padding:12px;font-size:13.5px}
+.err{font-size:13px;color:#b8412a;margin-top:8px;font-weight:700}
+.fab{position:fixed;left:12px;bottom:14px;font-size:11px;font-weight:800;color:var(--pinkd);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:7px 12px;box-shadow:var(--shadow);z-index:50}
+[hidden]{display:none!important}
+</style>
+
+<div class="app">
+  <div class="hud"><img src="__LOGO__" alt="Re:che"><div><b>おたすけ らいと君</b><small>商品の情報から、出品文と値付けの下書きをつくります</small></div></div>
+
+  <div class="card"><div class="row"><span class="buddy" id="buddy"></span><div class="bubble" id="greet">こんにちは。出品先を選んで、商品のことを教えてください。タイトル・説明文・ハッシュタグ・価格の目安まで、いっしょに作ります。</div></div></div>
+
+  <div class="card" id="form">
+    <label>出品先</label>
+    <div class="seg" id="seg"><button type="button" class="on" data-p="mercari">メルカリ出品</button><button type="button" data-p="yahoo">ヤフオク出品</button></div>
+    <div class="g2">
+      <div><label for="f-brand">ブランド名</label><input id="f-brand" list="dl-brand" autocomplete="off"></div>
+      <div><label for="f-item">アイテム名<em>必須</em></label><input id="f-item" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-color">カラー</label><input id="f-color" list="dl-color" autocomplete="off"></div>
+      <div><label for="f-sizeLabel">表記サイズ</label><input id="f-sizeLabel" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-material">素材</label><input id="f-material" list="dl-material" autocomplete="off"></div>
+      <div><label for="f-condition">状態</label><select id="f-condition"></select></div>
+    </div>
+    <div class="meas" id="meas" hidden><b id="measTitle">採寸（平置き・cm）</b><div class="g3" id="measGrid"></div></div>
+    <label for="f-damage">傷・汚れ<em>あれば</em></label><textarea id="f-damage"></textarea>
+    <div class="g2">
+      <div><label for="f-model">型番<em>任意</em></label><input id="f-model" autocomplete="off"></div>
+      <div><label for="f-refPrice">参考価格（定価・円）<em>任意</em></label><input id="f-refPrice" inputmode="numeric" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-accessories">付属品<em>任意</em></label><input id="f-accessories" autocomplete="off"></div>
+      <div><label for="f-purchasedFrom">購入先<em>任意</em></label><input id="f-purchasedFrom" autocomplete="off"></div>
+    </div>
+    <label for="f-features">その他の特徴<em>任意</em></label><textarea id="f-features"></textarea>
+    <div id="chipsWrap" hidden><label>この商品に当てはまるもの<em>タップで選ぶとタイトルに入ります。当てはまらないものは選ばないでください</em></label><div class="chips" id="chips"></div></div>
+    <label for="f-cost">仕入れ値（円）<em>任意・見込みの差額を出すだけに使います</em></label><input id="f-cost" inputmode="numeric" placeholder="例）1200" autocomplete="off">
+    <button class="cta" id="go" type="button">下書きをつくる</button>
+    <div class="err" id="err" hidden></div>
+    <datalist id="dl-brand"></datalist><datalist id="dl-color"></datalist><datalist id="dl-material"></datalist>
+  </div>
+
+  <div class="card res" id="result" hidden></div>
+
+  <div class="note" style="text-align:center;margin-top:14px">価格は目安です。同じ商品の売り切れ相場を確かめてから決めてください。入れた情報は、この画面の中だけで使います。</div>
+</div>
+<span class="fab" id="fab">困ったときはRe:che専用LINEへ</span>
+<script>
+/* dict/dictionaries.js */
+/* おたすけ君らいと 出品文生成用 辞書データ
+ * 正本: spec/SOURCE_SPEC.md（01〜13）。ブラウザ（window.RAITO_DICT）と node（require）の両対応。
+ * 優先順位: 1ブランド 2高値ワード 3カテゴリ 4状態 5完成サンプル 6カラー・素材 7ブランド別キーワード
+ */
+var RAITO_DICT = {
+
+  /* ===== 01 ブランド辞書 ===== */
+  brands: [
+    /* --- ラグジュアリー --- */
+    {brand_name:'LOUIS VUITTON', brand_name_jp:'ルイヴィトン', brand_name_en:'LOUIS VUITTON', reading:'ルイヴィトン', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['LV','ヴィトン','ルイ・ヴィトン','モノグラム','ダミエ']},
+    {brand_name:'CHANEL', brand_name_jp:'シャネル', brand_name_en:'CHANEL', reading:'シャネル', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['ココマーク','マトラッセ','CC']},
+    {brand_name:'HERMES', brand_name_jp:'エルメス', brand_name_en:'HERMES', reading:'エルメス', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['Hロゴ','セリエ','カレ']},
+    {brand_name:'GUCCI', brand_name_jp:'グッチ', brand_name_en:'GUCCI', reading:'グッチ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['GG','シェリーライン','インターロッキング']},
+    {brand_name:'PRADA', brand_name_jp:'プラダ', brand_name_en:'PRADA', reading:'プラダ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['サフィアーノ','三角ロゴ','テスート']},
+    {brand_name:'MONCLER', brand_name_jp:'モンクレール', brand_name_en:'MONCLER', reading:'モンクレール', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['ダウン','ワッペン']},
+    {brand_name:'CELINE', brand_name_jp:'セリーヌ', brand_name_en:'CELINE', reading:'セリーヌ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['トリオンフ','ラゲージ','マカダム']},
+    {brand_name:'Dior', brand_name_jp:'ディオール', brand_name_en:'DIOR', reading:'ディオール', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['Christian Dior','クリスチャンディオール','トロッター','サドル']},
+    {brand_name:'BALENCIAGA', brand_name_jp:'バレンシアガ', brand_name_en:'BALENCIAGA', reading:'バレンシアガ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['ザ・シティ','トリプルS','エブリデイ']},
+    {brand_name:'Loro Piana', brand_name_jp:'ロロピアーナ', brand_name_en:'LORO PIANA', reading:'ロロピアーナ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['カシミヤ','ベビーカシミヤ','ストームシステム']},
+    {brand_name:'Max Mara', brand_name_jp:'マックスマーラ', brand_name_en:'MAX MARA', reading:'マックスマーラ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['マニュエラ','101801','白タグ','テディベアコート']},
+    {brand_name:'BURBERRY', brand_name_jp:'バーバリー', brand_name_en:'BURBERRY', reading:'バーバリー', category:'ラグジュアリー', country:'イギリス', luxury_flag:true, search_keywords:['ノバチェック','ホースフェリー','トレンチ']},
+    {brand_name:'Salvatore Ferragamo', brand_name_jp:'サルヴァトーレフェラガモ', brand_name_en:'SALVATORE FERRAGAMO', reading:'フェラガモ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['フェラガモ','ヴァラ','ガンチーニ']},
+    {brand_name:'VALENTINO', brand_name_jp:'ヴァレンティノ', brand_name_en:'VALENTINO', reading:'ヴァレンティノ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['バレンチノ','ロックスタッズ','Vロゴ']},
+    {brand_name:'Maison Margiela', brand_name_jp:'メゾンマルジェラ', brand_name_en:'MAISON MARGIELA', reading:'マルジェラ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['Maison Martin Margiela','マルタンマルジェラ','4ステッチ','タビ']},
+    {brand_name:'FENDI', brand_name_jp:'フェンディ', brand_name_en:'FENDI', reading:'フェンディ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['ズッカ','ペカン','バゲット']},
+    {brand_name:'BOTTEGA VENETA', brand_name_jp:'ボッテガヴェネタ', brand_name_en:'BOTTEGA VENETA', reading:'ボッテガヴェネタ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['イントレチャート','ボッテガ']},
+    {brand_name:'SAINT LAURENT', brand_name_jp:'サンローラン', brand_name_en:'SAINT LAURENT', reading:'サンローラン', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['YSL','イヴサンローラン','カサンドラ']},
+    {brand_name:'LOEWE', brand_name_jp:'ロエベ', brand_name_en:'LOEWE', reading:'ロエベ', category:'ラグジュアリー', country:'スペイン', luxury_flag:true, search_keywords:['アナグラム','パズル','ハンモック']},
+    {brand_name:'MIU MIU', brand_name_jp:'ミュウミュウ', brand_name_en:'MIU MIU', reading:'ミュウミュウ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['マテラッセ','ビジュー']},
+    {brand_name:'GIVENCHY', brand_name_jp:'ジバンシィ', brand_name_en:'GIVENCHY', reading:'ジバンシィ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['ジバンシー','4Gロゴ','アンティゴナ']},
+    {brand_name:'DOLCE&GABBANA', brand_name_jp:'ドルチェアンドガッバーナ', brand_name_en:'DOLCE&GABBANA', reading:'ドルチェアンドガッバーナ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['D&G','ドルガバ','DGロゴ']},
+    {brand_name:'Chloe', brand_name_jp:'クロエ', brand_name_en:'CHLOE', reading:'クロエ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['パディントン','マーシー','フェイ']},
+    {brand_name:'Brunello Cucinelli', brand_name_jp:'ブルネロクチネリ', brand_name_en:'BRUNELLO CUCINELLI', reading:'ブルネロクチネリ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['クチネリ','モニーレ','カシミヤ']},
+    {brand_name:'Cartier', brand_name_jp:'カルティエ', brand_name_en:'CARTIER', reading:'カルティエ', category:'ラグジュアリー', country:'フランス', luxury_flag:true, search_keywords:['トリニティ','ラブ','タンク']},
+    {brand_name:'TIFFANY & Co.', brand_name_jp:'ティファニー', brand_name_en:'TIFFANY & CO.', reading:'ティファニー', category:'ラグジュアリー', country:'アメリカ', luxury_flag:true, search_keywords:['ティファニーブルー','オープンハート','リターントゥ']},
+    {brand_name:'BVLGARI', brand_name_jp:'ブルガリ', brand_name_en:'BVLGARI', reading:'ブルガリ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['ビーゼロワン','ブルガリブルガリ']},
+    {brand_name:'ETRO', brand_name_jp:'エトロ', brand_name_en:'ETRO', reading:'エトロ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['ペイズリー','ペガソ']},
+    {brand_name:'JIL SANDER', brand_name_jp:'ジルサンダー', brand_name_en:'JIL SANDER', reading:'ジルサンダー', category:'ラグジュアリー', country:'ドイツ', luxury_flag:true, search_keywords:['ジルサンダー','ミニマル']},
+    {brand_name:'HERNO', brand_name_jp:'ヘルノ', brand_name_en:'HERNO', reading:'ヘルノ', category:'ラグジュアリー', country:'イタリア', luxury_flag:true, search_keywords:['ダウン','ライトダウン']},
+
+    /* --- インポート／国内アパレル --- */
+    {brand_name:'TATRAS', brand_name_jp:'タトラス', brand_name_en:'TATRAS', reading:'タトラス', category:'インポートアパレル', country:'日本', luxury_flag:false, search_keywords:['ダウン','ポリテクス']},
+    {brand_name:'SUPREME', brand_name_jp:'シュプリーム', brand_name_en:'SUPREME', reading:'シュプリーム', category:'インポートアパレル', country:'アメリカ', luxury_flag:false, search_keywords:['ボックスロゴ','BOX LOGO']},
+    {brand_name:'CANADA GOOSE', brand_name_jp:'カナダグース', brand_name_en:'CANADA GOOSE', reading:'カナダグース', category:'インポートアパレル', country:'カナダ', luxury_flag:false, search_keywords:['ジャスパー','シャトー','マッケンジー']},
+    {brand_name:'Ralph Lauren', brand_name_jp:'ラルフローレン', brand_name_en:'RALPH LAUREN', reading:'ラルフローレン', category:'インポートアパレル', country:'アメリカ', luxury_flag:false, search_keywords:['ポロ','ポニー刺繍','POLO']},
+    {brand_name:'TOMMY HILFIGER', brand_name_jp:'トミーヒルフィガー', brand_name_en:'TOMMY HILFIGER', reading:'トミーヒルフィガー', category:'インポートアパレル', country:'アメリカ', luxury_flag:false, search_keywords:['トミー','フラッグロゴ']},
+    {brand_name:'LACOSTE', brand_name_jp:'ラコステ', brand_name_en:'LACOSTE', reading:'ラコステ', category:'インポートアパレル', country:'フランス', luxury_flag:false, search_keywords:['ワニ','ポロシャツ']},
+    {brand_name:'FRED PERRY', brand_name_jp:'フレッドペリー', brand_name_en:'FRED PERRY', reading:'フレッドペリー', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['月桂樹','ローレル','ポロシャツ']},
+    {brand_name:'Paul Smith', brand_name_jp:'ポールスミス', brand_name_en:'PAUL SMITH', reading:'ポールスミス', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['マルチストライプ','アーティストストライプ']},
+    {brand_name:'A.P.C.', brand_name_jp:'アーペーセー', brand_name_en:'A.P.C.', reading:'アーペーセー', category:'インポートアパレル', country:'フランス', luxury_flag:false, search_keywords:['プチニュースタンダード','デニム']},
+    {brand_name:'agnes b.', brand_name_jp:'アニエスベー', brand_name_en:'AGNES B.', reading:'アニエスベー', category:'インポートアパレル', country:'フランス', luxury_flag:false, search_keywords:['カーディガンプレッション','ボーダー']},
+    {brand_name:'Vivienne Westwood', brand_name_jp:'ヴィヴィアンウエストウッド', brand_name_en:'VIVIENNE WESTWOOD', reading:'ヴィヴィアン', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['オーブ','ヴィヴィアン']},
+    {brand_name:'MACKINTOSH', brand_name_jp:'マッキントッシュ', brand_name_en:'MACKINTOSH', reading:'マッキントッシュ', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['ゴム引き','ステンカラー']},
+    {brand_name:'Aquascutum', brand_name_jp:'アクアスキュータム', brand_name_en:'AQUASCUTUM', reading:'アクアスキュータム', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['クラブチェック','トレンチ']},
+    {brand_name:'Barbour', brand_name_jp:'バブアー', brand_name_en:'BARBOUR', reading:'バブアー', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['ビデイル','ビューフォート','オイルドジャケット']},
+    {brand_name:'Saint James', brand_name_jp:'セントジェームス', brand_name_en:'SAINT JAMES', reading:'セントジェームス', category:'インポートアパレル', country:'フランス', luxury_flag:false, search_keywords:['ウエッソン','バスクシャツ','ボーダー']},
+    {brand_name:"Levi's", brand_name_jp:'リーバイス', brand_name_en:"LEVI'S", reading:'リーバイス', category:'インポートアパレル', country:'アメリカ', luxury_flag:false, search_keywords:['501','505','赤タブ']},
+    {brand_name:'Dr.Martens', brand_name_jp:'ドクターマーチン', brand_name_en:'DR.MARTENS', reading:'ドクターマーチン', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['1460','1461','8ホール','3ホール']},
+    {brand_name:'HUNTER', brand_name_jp:'ハンター', brand_name_en:'HUNTER', reading:'ハンター', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['レインブーツ','オリジナルトール']},
+    {brand_name:'Theory', brand_name_jp:'セオリー', brand_name_en:'THEORY', reading:'セオリー', category:'インポートアパレル', country:'アメリカ', luxury_flag:false, search_keywords:['ストレッチ','セットアップ']},
+    {brand_name:'FOXEY', brand_name_jp:'フォクシー', brand_name_en:'FOXEY', reading:'フォクシー', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['FOXEY NEW YORK','フォクシーニューヨーク']},
+    {brand_name:'ADORE', brand_name_jp:'アドーア', brand_name_en:'ADORE', reading:'アドーア', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['アドーア']},
+    {brand_name:'ADEAM', brand_name_jp:'アディアム', brand_name_en:'ADEAM', reading:'アディアム', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['アディアム']},
+    {brand_name:'UNITED ARROWS', brand_name_jp:'ユナイテッドアローズ', brand_name_en:'UNITED ARROWS', reading:'ユナイテッドアローズ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['UA','ビューティアンドユース','グリーンレーベル']},
+    {brand_name:'BEAMS', brand_name_jp:'ビームス', brand_name_en:'BEAMS', reading:'ビームス', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['デミルクスビームス','レイビームス','BEAMS BOY']},
+    {brand_name:'JOURNAL STANDARD', brand_name_jp:'ジャーナルスタンダード', brand_name_en:'JOURNAL STANDARD', reading:'ジャーナルスタンダード', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['レリューム','JS']},
+    {brand_name:'TOMORROWLAND', brand_name_jp:'トゥモローランド', brand_name_en:'TOMORROWLAND', reading:'トゥモローランド', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ボールジィ','マカフィー']},
+    {brand_name:'nano universe', brand_name_jp:'ナノユニバース', brand_name_en:'NANO UNIVERSE', reading:'ナノユニバース', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ナノユニ']},
+    {brand_name:'SHIPS', brand_name_jp:'シップス', brand_name_en:'SHIPS', reading:'シップス', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['シップスエニィ']},
+    {brand_name:'URBAN RESEARCH', brand_name_jp:'アーバンリサーチ', brand_name_en:'URBAN RESEARCH', reading:'アーバンリサーチ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ドアーズ','UR']},
+    {brand_name:'Ron Herman', brand_name_jp:'ロンハーマン', brand_name_en:'RON HERMAN', reading:'ロンハーマン', category:'国内アパレル', country:'アメリカ', luxury_flag:false, search_keywords:['ロンハーマン']},
+    {brand_name:'23区', brand_name_jp:'ニジュウサンク', brand_name_en:'NIJYUSANKU', reading:'ニジュウサンク', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['23区','オンワード']},
+    {brand_name:'ICB', brand_name_jp:'アイシービー', brand_name_en:'ICB', reading:'アイシービー', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['アイシービー']},
+    {brand_name:'Mila Owen', brand_name_jp:'ミラオーウェン', brand_name_en:'MILA OWEN', reading:'ミラオーウェン', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ミラオーウェン']},
+    {brand_name:'SNIDEL', brand_name_jp:'スナイデル', brand_name_en:'SNIDEL', reading:'スナイデル', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['スナイデル']},
+    {brand_name:'FRAY I.D', brand_name_jp:'フレイアイディー', brand_name_en:'FRAY I.D', reading:'フレイアイディー', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['フレイアイディー']},
+    {brand_name:'moussy', brand_name_jp:'マウジー', brand_name_en:'MOUSSY', reading:'マウジー', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['マウジー','MVS']},
+    {brand_name:'BLACK BY MOUSSY', brand_name_jp:'ブラックバイマウジー', brand_name_en:'BLACK BY MOUSSY', reading:'ブラックバイマウジー', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ブラックバイマウジー']},
+    {brand_name:"Y's", brand_name_jp:'ワイズ', brand_name_en:"Y'S", reading:'ワイズ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ヨウジヤマモト']},
+    {brand_name:'Yohji Yamamoto', brand_name_jp:'ヨウジヤマモト', brand_name_en:'YOHJI YAMAMOTO', reading:'ヨウジヤマモト', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['プールオム','ファム']},
+    {brand_name:'COMME des GARCONS', brand_name_jp:'コムデギャルソン', brand_name_en:'COMME DES GARCONS', reading:'コムデギャルソン', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ギャルソン','プレイ','CDG']},
+    {brand_name:'ISSEY MIYAKE', brand_name_jp:'イッセイミヤケ', brand_name_en:'ISSEY MIYAKE', reading:'イッセイミヤケ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['バオバオ','オムプリッセ']},
+    {brand_name:'PLEATS PLEASE', brand_name_jp:'プリーツプリーズ', brand_name_en:'PLEATS PLEASE', reading:'プリーツプリーズ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['イッセイミヤケ','プリーツ']},
+    {brand_name:'sacai', brand_name_jp:'サカイ', brand_name_en:'SACAI', reading:'サカイ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ドッキング']},
+    {brand_name:'MARGARET HOWELL', brand_name_jp:'マーガレットハウエル', brand_name_en:'MARGARET HOWELL', reading:'マーガレットハウエル', category:'インポートアパレル', country:'イギリス', luxury_flag:false, search_keywords:['MHL','エムエイチエル']},
+    {brand_name:'SCOT CLUB', brand_name_jp:'スコットクラブ', brand_name_en:'SCOT CLUB', reading:'スコットクラブ', category:'国内アパレル', country:'日本', luxury_flag:false, search_keywords:['ヤマダヤ']},
+
+    /* --- スポーツ・アウトドア --- */
+    {brand_name:'THE NORTH FACE', brand_name_jp:'ザノースフェイス', brand_name_en:'THE NORTH FACE', reading:'ノースフェイス', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['ノースフェイス','ヌプシ','マウンテンライト','バルトロ']},
+    {brand_name:'NIKE', brand_name_jp:'ナイキ', brand_name_en:'NIKE', reading:'ナイキ', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['スウッシュ','AIR','エアマックス','ダンク']},
+    {brand_name:'adidas', brand_name_jp:'アディダス', brand_name_en:'ADIDAS', reading:'アディダス', category:'スポーツ・アウトドア', country:'ドイツ', luxury_flag:false, search_keywords:['スリーストライプ','スタンスミス','トレフォイル']},
+    {brand_name:'PUMA', brand_name_jp:'プーマ', brand_name_en:'PUMA', reading:'プーマ', category:'スポーツ・アウトドア', country:'ドイツ', luxury_flag:false, search_keywords:['スウェード','フォームストリップ']},
+    {brand_name:'New Balance', brand_name_jp:'ニューバランス', brand_name_en:'NEW BALANCE', reading:'ニューバランス', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['996','574','990']},
+    {brand_name:'CONVERSE', brand_name_jp:'コンバース', brand_name_en:'CONVERSE', reading:'コンバース', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['オールスター','チャックテイラー']},
+    {brand_name:'VANS', brand_name_jp:'ヴァンズ', brand_name_en:'VANS', reading:'バンズ', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['オールドスクール','スリッポン']},
+    {brand_name:'Patagonia', brand_name_jp:'パタゴニア', brand_name_en:'PATAGONIA', reading:'パタゴニア', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['レトロX','シンチラ','ナノパフ']},
+    {brand_name:'mont-bell', brand_name_jp:'モンベル', brand_name_en:'MONT-BELL', reading:'モンベル', category:'スポーツ・アウトドア', country:'日本', luxury_flag:false, search_keywords:['プラズマ','ゴアテックス']},
+    {brand_name:'Columbia', brand_name_jp:'コロンビア', brand_name_en:'COLUMBIA', reading:'コロンビア', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['オムニヒート']},
+    {brand_name:'ASICS', brand_name_jp:'アシックス', brand_name_en:'ASICS', reading:'アシックス', category:'スポーツ・アウトドア', country:'日本', luxury_flag:false, search_keywords:['ゲルカヤノ','オニツカタイガー']},
+    {brand_name:'Champion', brand_name_jp:'チャンピオン', brand_name_en:'CHAMPION', reading:'チャンピオン', category:'スポーツ・アウトドア', country:'アメリカ', luxury_flag:false, search_keywords:['リバースウィーブ','単色タグ']},
+
+    /* --- ファストファッション／量販 --- */
+    {brand_name:'UNIQLO', brand_name_jp:'ユニクロ', brand_name_en:'UNIQLO', reading:'ユニクロ', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ユニクロユー','UNIQLO U','ヒートテック','ウルトラライトダウン','感動パンツ']},
+    {brand_name:'GU', brand_name_jp:'ジーユー', brand_name_en:'GU', reading:'ジーユー', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ジーユー']},
+    {brand_name:'無印良品', brand_name_jp:'無印良品', brand_name_en:'MUJI', reading:'ムジルシリョウヒン', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['無印','MUJI','オーガニックコットン']},
+    {brand_name:'ZARA', brand_name_jp:'ザラ', brand_name_en:'ZARA', reading:'ザラ', category:'ファストファッション', country:'スペイン', luxury_flag:false, search_keywords:['ザラ']},
+    {brand_name:'H&M', brand_name_jp:'エイチアンドエム', brand_name_en:'H&M', reading:'エイチアンドエム', category:'ファストファッション', country:'スウェーデン', luxury_flag:false, search_keywords:['エイチアンドエム']},
+    {brand_name:'しまむら', brand_name_jp:'しまむら', brand_name_en:'SHIMAMURA', reading:'シマムラ', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ファッションセンターしまむら']},
+    {brand_name:'GAP', brand_name_jp:'ギャップ', brand_name_en:'GAP', reading:'ギャップ', category:'ファストファッション', country:'アメリカ', luxury_flag:false, search_keywords:['ギャップ','オールドネイビー']},
+    {brand_name:'earth music&ecology', brand_name_jp:'アースミュージックアンドエコロジー', brand_name_en:'EARTH MUSIC&ECOLOGY', reading:'アース', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['アース']},
+    {brand_name:'GLOBAL WORK', brand_name_jp:'グローバルワーク', brand_name_en:'GLOBAL WORK', reading:'グローバルワーク', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['グロバ']},
+    {brand_name:'LOWRYS FARM', brand_name_jp:'ローリーズファーム', brand_name_en:'LOWRYS FARM', reading:'ローリーズファーム', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ローリーズ']},
+    {brand_name:'niko and...', brand_name_jp:'ニコアンド', brand_name_en:'NIKO AND...', reading:'ニコアンド', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ニコアンド']},
+    {brand_name:'WEGO', brand_name_jp:'ウィゴー', brand_name_en:'WEGO', reading:'ウィゴー', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ウィゴー']},
+    {brand_name:'coen', brand_name_jp:'コーエン', brand_name_en:'COEN', reading:'コーエン', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['コーエン']},
+    {brand_name:'Honeys', brand_name_jp:'ハニーズ', brand_name_en:'HONEYS', reading:'ハニーズ', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['ハニーズ']},
+    {brand_name:'ORIHICA', brand_name_jp:'オリヒカ', brand_name_en:'ORIHICA', reading:'オリヒカ', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['オリヒカ','RHYME']},
+    {brand_name:'洋服の青山', brand_name_jp:'洋服の青山', brand_name_en:'AOYAMA', reading:'ヨウフクノアオヤマ', category:'ファストファッション', country:'日本', luxury_flag:false, search_keywords:['青山','スーツ']},
+
+    /* --- バッグ・財布ブランド --- */
+    {brand_name:'COACH', brand_name_jp:'コーチ', brand_name_en:'COACH', reading:'コーチ', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['シグネチャー','オプアート','タビー']},
+    {brand_name:'kate spade', brand_name_jp:'ケイトスペード', brand_name_en:'KATE SPADE', reading:'ケイトスペード', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['スペードマーク','ケイトスペードニューヨーク']},
+    {brand_name:'MICHAEL KORS', brand_name_jp:'マイケルコース', brand_name_en:'MICHAEL KORS', reading:'マイケルコース', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['MKロゴ','ジェットセット']},
+    {brand_name:'FURLA', brand_name_jp:'フルラ', brand_name_en:'FURLA', reading:'フルラ', category:'バッグ・財布', country:'イタリア', luxury_flag:false, search_keywords:['メトロポリス','パイパー']},
+    {brand_name:'TORY BURCH', brand_name_jp:'トリーバーチ', brand_name_en:'TORY BURCH', reading:'トリーバーチ', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['ダブルTロゴ','ミラー','エラ']},
+    {brand_name:'MARC JACOBS', brand_name_jp:'マークジェイコブス', brand_name_en:'MARC JACOBS', reading:'マークジェイコブス', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['ザトートバッグ','スナップショット']},
+    {brand_name:'LONGCHAMP', brand_name_jp:'ロンシャン', brand_name_en:'LONGCHAMP', reading:'ロンシャン', category:'バッグ・財布', country:'フランス', luxury_flag:false, search_keywords:['ル・プリアージュ','プリアージュ']},
+    {brand_name:'FEILER', brand_name_jp:'フェイラー', brand_name_en:'FEILER', reading:'フェイラー', category:'バッグ・財布', country:'ドイツ', luxury_flag:false, search_keywords:['シュニール織','ハイジ']},
+    {brand_name:'IL BISONTE', brand_name_jp:'イルビゾンテ', brand_name_en:'IL BISONTE', reading:'イルビゾンテ', category:'バッグ・財布', country:'イタリア', luxury_flag:false, search_keywords:['ヌメ革','バッファロー']},
+    {brand_name:'PORTER', brand_name_jp:'ポーター', brand_name_en:'PORTER', reading:'ポーター', category:'バッグ・財布', country:'日本', luxury_flag:false, search_keywords:['吉田カバン','タンカー']},
+    {brand_name:'Samantha Thavasa', brand_name_jp:'サマンサタバサ', brand_name_en:'SAMANTHA THAVASA', reading:'サマンサタバサ', category:'バッグ・財布', country:'日本', luxury_flag:false, search_keywords:['サマンサベガ']},
+    {brand_name:'ANTEPRIMA', brand_name_jp:'アンテプリマ', brand_name_en:'ANTEPRIMA', reading:'アンテプリマ', category:'バッグ・財布', country:'イタリア', luxury_flag:false, search_keywords:['ワイヤーバッグ']},
+    {brand_name:'Dakota', brand_name_jp:'ダコタ', brand_name_en:'DAKOTA', reading:'ダコタ', category:'バッグ・財布', country:'日本', luxury_flag:false, search_keywords:['がま口','アプローズ']},
+    {brand_name:'TUMI', brand_name_jp:'トゥミ', brand_name_en:'TUMI', reading:'トゥミ', category:'バッグ・財布', country:'アメリカ', luxury_flag:false, search_keywords:['アルファ','ビジネスバッグ']},
+    {brand_name:'MIKIMOTO', brand_name_jp:'ミキモト', brand_name_en:'MIKIMOTO', reading:'ミキモト', category:'ジュエリー', country:'日本', luxury_flag:true, search_keywords:['アコヤ真珠','パール']},
+    {brand_name:'SWAROVSKI', brand_name_jp:'スワロフスキー', brand_name_en:'SWAROVSKI', reading:'スワロフスキー', category:'ジュエリー', country:'オーストリア', luxury_flag:false, search_keywords:['クリスタル','スワン']}
+  ],
+
+  /* ===== 02 アイテムカテゴリ辞書 ===== */
+  categories: [
+    {category:'アウター', subcategory:'テーラードジャケット', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ウール','カシミヤ','リネン','ポリエステル'], recommended_keywords:['美シルエット','ビジネス','高級感','2B','セレモニー'], aliases:['ジャケット','テーラード','ブレザー','紺ブレ']},
+    {category:'アウター', subcategory:'ダウンジャケット', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ダウン','フェザー','ナイロン','ポリエステル'], recommended_keywords:['軽量','防寒','フード付き','ロング丈'], aliases:['ダウン','ダウンコート','ダウンベスト','ライトダウン']},
+    {category:'アウター', subcategory:'コート', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ウール','カシミヤ','アンゴラ','アルパカ'], recommended_keywords:['ロング丈','チェスターコート','ノーカラー','防寒'], aliases:['チェスターコート','ステンカラーコート','ピーコート','ダッフルコート','ガウンコート']},
+    {category:'アウター', subcategory:'トレンチコート', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','ギャバジン','ポリエステル'], recommended_keywords:['ライナー付き','ベルト付き','定番','春秋'], aliases:['トレンチ','トレンチコート']},
+    {category:'アウター', subcategory:'ブルゾン', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ナイロン','ポリエステル','コットン'], recommended_keywords:['MA-1','ショート丈','ジップアップ'], aliases:['ジャンパー','MA-1','ボンバージャケット','マウンテンパーカー','デニムジャケット','Gジャン']},
+    {category:'アウター', subcategory:'ライダース', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['本革','ラムレザー','合成皮革'], recommended_keywords:['ダブルライダース','シングルライダース','レザージャケット'], aliases:['ライダースジャケット','レザージャケット','革ジャン']},
+    {category:'トップス', subcategory:'Tシャツ', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','ポリエステル'], recommended_keywords:['ロゴ','プリント','オーバーサイズ','半袖'], aliases:['ティーシャツ','tee','T-shirt','カットソー','ロンT','半袖Tシャツ']},
+    {category:'トップス', subcategory:'シャツ', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','リネン','ポリエステル'], recommended_keywords:['長袖','ストライプ','ボタンダウン','ビジネス'], aliases:['ワイシャツ','Yシャツ','ボタンダウンシャツ','ネルシャツ']},
+    {category:'トップス', subcategory:'ブラウス', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['シルク','ポリエステル','レーヨン','シフォン'], recommended_keywords:['とろみ','フリル','ボウタイ','オフィス'], aliases:['ブラウス','シアーブラウス']},
+    {category:'トップス', subcategory:'ニット', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ウール','カシミヤ','モヘア','アルパカ','アクリル'], recommended_keywords:['タートルネック','Vネック','ケーブル編み','ローゲージ'], aliases:['セーター','ニットセーター','プルオーバー','ベスト']},
+    {category:'トップス', subcategory:'カーディガン', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['ウール','カシミヤ','コットン','アクリル'], recommended_keywords:['羽織り','Vネック','クルーネック'], aliases:['カーデ','ニットカーディガン']},
+    {category:'トップス', subcategory:'パーカー', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','ポリエステル'], recommended_keywords:['プルオーバー','ジップアップ','ロゴ','裏起毛'], aliases:['フーディ','フーディー','hoodie','パーカ']},
+    {category:'トップス', subcategory:'スウェット', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','ポリエステル'], recommended_keywords:['トレーナー','クルーネック','裏起毛','ロゴ'], aliases:['トレーナー','スエット','sweat']},
+    {category:'トップス', subcategory:'ポロシャツ', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','鹿の子','ポリエステル'], recommended_keywords:['鹿の子','ワンポイント','半袖','ゴルフ'], aliases:['ポロ','polo']},
+    {category:'ボトムス', subcategory:'パンツ', size_fields:['ウエスト','股上','股下','わたり幅','裾幅'], material_keywords:['ウール','コットン','ポリエステル','リネン'], recommended_keywords:['テーパード','ストレート','ワイド','センタープレス'], aliases:['スラックス','ズボン','ワイドパンツ','チノパン','スキニー']},
+    {category:'ボトムス', subcategory:'デニム', size_fields:['ウエスト','股上','股下','わたり幅','裾幅'], material_keywords:['デニム','コットン','ストレッチ'], recommended_keywords:['ストレート','スキニー','ワイド','ハイウエスト'], aliases:['ジーンズ','ジーパン','デニムパンツ','jeans']},
+    {category:'ボトムス', subcategory:'スカート', size_fields:['ウエスト','総丈','ヒップ'], material_keywords:['ウール','コットン','シルク','ポリエステル'], recommended_keywords:['フレア','Aライン','プリーツ','タイト','ロング丈'], aliases:['ロングスカート','タイトスカート','プリーツスカート','フレアスカート']},
+    {category:'ボトムス', subcategory:'ショートパンツ', size_fields:['ウエスト','股上','股下','わたり幅','裾幅'], material_keywords:['コットン','デニム','ナイロン'], recommended_keywords:['ハーフパンツ','夏','リラックス'], aliases:['ハーフパンツ','短パン','ショーツ']},
+    {category:'ワンピース', subcategory:'ワンピース', size_fields:['肩幅','身幅','袖丈','着丈'], material_keywords:['コットン','ポリエステル','シルク','レーヨン'], recommended_keywords:['膝丈','ロング丈','Aライン','ウエストマーク'], aliases:['ワンピ','ドレス','dress','シャツワンピース']},
+    {category:'セットアップ', subcategory:'セットアップ', size_fields:['肩幅','身幅','袖丈','着丈','ウエスト','股下'], material_keywords:['ウール','ポリエステル','リネン'], recommended_keywords:['上下セット','オフィス','ジャケット×パンツ'], aliases:['上下セット','セットアップスーツ']},
+    {category:'スーツ', subcategory:'スーツ', size_fields:['肩幅','身幅','袖丈','着丈','ウエスト','股下'], material_keywords:['ウール','ポリエステル','モヘア'], recommended_keywords:['ビジネス','2B','セレモニー','ノータック'], aliases:['ビジネススーツ','パンツスーツ','スカートスーツ']},
+    {category:'靴', subcategory:'スニーカー', size_fields:['表記サイズ','アウトソール'], material_keywords:['レザー','キャンバス','スエード','メッシュ'], recommended_keywords:['ローカット','ハイカット','定番'], aliases:['スニーカー','シューズ','運動靴','sneaker']},
+    {category:'靴', subcategory:'パンプス', size_fields:['表記サイズ','アウトソール','ヒール高'], material_keywords:['本革','エナメル','スエード'], recommended_keywords:['ポインテッドトゥ','ラウンドトゥ','オフィス','ローヒール'], aliases:['ヒール','ハイヒール','バレエシューズ','フラットシューズ']},
+    {category:'靴', subcategory:'ブーツ', size_fields:['表記サイズ','アウトソール','ヒール高','筒丈'], material_keywords:['本革','スエード','ラバー'], recommended_keywords:['ショートブーツ','ロングブーツ','サイドゴア'], aliases:['ブーティ','ブーティー','ショートブーツ','ロングブーツ','レインブーツ']},
+    {category:'靴', subcategory:'サンダル', size_fields:['表記サイズ','アウトソール','ヒール高'], material_keywords:['本革','ラバー','スエード'], recommended_keywords:['ストラップ','フラット','夏'], aliases:['ミュール','スライドサンダル','ビーチサンダル']},
+    {category:'靴', subcategory:'ローファー', size_fields:['表記サイズ','アウトソール'], material_keywords:['本革','スエード','エナメル'], recommended_keywords:['コインローファー','ビットローファー','きれいめ'], aliases:['ローファー','モカシン','ドライビングシューズ']},
+    {category:'バッグ', subcategory:'ショルダーバッグ', size_fields:['縦','横','マチ','持ち手'], material_keywords:['本革','PVC','キャンバス','ナイロン'], recommended_keywords:['斜め掛け','2way','チェーン'], aliases:['ショルダー','ポシェット','サコッシュ','斜め掛けバッグ']},
+    {category:'バッグ', subcategory:'トートバッグ', size_fields:['縦','横','マチ','持ち手'], material_keywords:['本革','キャンバス','ナイロン','PVC'], recommended_keywords:['A4収納','肩掛け','大容量'], aliases:['トート','tote']},
+    {category:'バッグ', subcategory:'ハンドバッグ', size_fields:['縦','横','マチ','持ち手'], material_keywords:['本革','PVC','エナメル'], recommended_keywords:['2way','きれいめ','フォーマル'], aliases:['ハンド','手提げバッグ','ボストンバッグ']},
+    {category:'バッグ', subcategory:'リュック', size_fields:['縦','横','マチ','持ち手'], material_keywords:['ナイロン','本革','ポリエステル'], recommended_keywords:['大容量','通勤','バックパック'], aliases:['リュックサック','バックパック','デイパック']},
+    {category:'バッグ', subcategory:'クラッチ', size_fields:['縦','横','マチ'], material_keywords:['本革','エナメル','サテン'], recommended_keywords:['セカンドバッグ','パーティー','フォーマル'], aliases:['クラッチバッグ','セカンドバッグ','パーティーバッグ']},
+    {category:'小物', subcategory:'財布', size_fields:['縦','横','厚み'], material_keywords:['本革','PVC','エナメル'], recommended_keywords:['二つ折り','三つ折り','コンパクト'], aliases:['二つ折り財布','三つ折り財布','ミニ財布','コインケース','ウォレット','wallet']},
+    {category:'小物', subcategory:'長財布', size_fields:['縦','横','厚み'], material_keywords:['本革','PVC','エナメル'], recommended_keywords:['ラウンドファスナー','かぶせ','大容量'], aliases:['ロングウォレット','ラウンドファスナー財布']},
+    {category:'小物', subcategory:'キーケース', size_fields:['縦','横','厚み'], material_keywords:['本革','PVC'], recommended_keywords:['4連','6連','スマートキー'], aliases:['キーリング','キーホルダー']},
+    {category:'小物', subcategory:'カードケース', size_fields:['縦','横','厚み'], material_keywords:['本革','PVC'], recommended_keywords:['名刺入れ','パスケース','コンパクト'], aliases:['名刺入れ','パスケース','定期入れ']},
+    {category:'小物', subcategory:'ベルト', size_fields:['全長','幅'], material_keywords:['本革','エナメル','キャンバス'], recommended_keywords:['ロゴバックル','リバーシブル'], aliases:['レザーベルト','belt']},
+    {category:'小物', subcategory:'ネクタイ', size_fields:['全長','大剣幅'], material_keywords:['シルク','ポリエステル','ウール'], recommended_keywords:['総柄','ストライプ','ソリッド','ビジネス'], aliases:['タイ','necktie']},
+    {category:'小物', subcategory:'ストール', size_fields:['縦','横'], material_keywords:['カシミヤ','ウール','シルク'], recommended_keywords:['大判','マフラー','スカーフ'], aliases:['マフラー','スカーフ','ショール']},
+    {category:'小物', subcategory:'帽子', size_fields:['頭周り','つば'], material_keywords:['ウール','コットン','麦わら'], recommended_keywords:['キャップ','ハット','ベレー帽'], aliases:['キャップ','ハット','ニット帽','ベレー帽','バケットハット']},
+    {category:'アクセサリー', subcategory:'アクセサリー', size_fields:['全長','トップ縦','トップ横'], material_keywords:['シルバー925','K18','パール','ゴールド'], recommended_keywords:['ネックレス','ピアス','ブレスレット','リング'], aliases:['ネックレス','ピアス','イヤリング','ブレスレット','指輪','リング','ブローチ','アクセ']},
+    {category:'アクセサリー', subcategory:'腕時計', size_fields:['ケース径','腕周り'], material_keywords:['ステンレス','レザー','ゴールド'], recommended_keywords:['クオーツ','自動巻き','動作品'], aliases:['時計','ウォッチ','watch']}
+  ],
+
+  /* ===== 03 カラー辞書 ===== */
+  colors: [
+    {input_color:'黒', display_jp:'黒', display_common:'ブラック', display_en:'BLACK'},
+    {input_color:'白', display_jp:'白', display_common:'ホワイト', display_en:'WHITE'},
+    {input_color:'紺', display_jp:'紺', display_common:'ネイビー', display_en:'NAVY'},
+    {input_color:'茶', display_jp:'茶', display_common:'ブラウン', display_en:'BROWN'},
+    {input_color:'灰', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'ベージュ', display_jp:'ベージュ', display_common:'ベージュ', display_en:'BEIGE'},
+    {input_color:'赤', display_jp:'赤', display_common:'レッド', display_en:'RED'},
+    {input_color:'ピンク', display_jp:'桃色', display_common:'ピンク', display_en:'PINK'},
+    {input_color:'青', display_jp:'青', display_common:'ブルー', display_en:'BLUE'},
+    {input_color:'緑', display_jp:'緑', display_common:'グリーン', display_en:'GREEN'},
+    {input_color:'黄', display_jp:'黄色', display_common:'イエロー', display_en:'YELLOW'},
+    {input_color:'紫', display_jp:'紫', display_common:'パープル', display_en:'PURPLE'},
+    {input_color:'オレンジ', display_jp:'橙', display_common:'オレンジ', display_en:'ORANGE'},
+    {input_color:'カーキ', display_jp:'カーキ', display_common:'カーキ', display_en:'KHAKI'},
+    {input_color:'ゴールド', display_jp:'金', display_common:'ゴールド', display_en:'GOLD'},
+    {input_color:'シルバー', display_jp:'銀', display_common:'シルバー', display_en:'SILVER'},
+    {input_color:'マルチ', display_jp:'マルチカラー', display_common:'マルチカラー', display_en:'MULTICOLOR'},
+    {input_color:'アイボリー', display_jp:'アイボリー', display_common:'アイボリー', display_en:'IVORY'},
+    {input_color:'ワインレッド', display_jp:'えんじ', display_common:'ワインレッド', display_en:'WINE RED'},
+    {input_color:'ボルドー', display_jp:'ボルドー', display_common:'ボルドー', display_en:'BORDEAUX'},
+    {input_color:'ライトブルー', display_jp:'水色', display_common:'ライトブルー', display_en:'LIGHT BLUE'},
+    {input_color:'キャメル', display_jp:'キャメル', display_common:'キャメル', display_en:'CAMEL'},
+    {input_color:'オフホワイト', display_jp:'生成り', display_common:'オフホワイト', display_en:'OFF WHITE'},
+    {input_color:'チャコール', display_jp:'チャコールグレー', display_common:'チャコールグレー', display_en:'CHARCOAL'},
+    /* 入力ゆれ（別名） */
+    {input_color:'ブラック', display_jp:'黒', display_common:'ブラック', display_en:'BLACK'},
+    {input_color:'ホワイト', display_jp:'白', display_common:'ホワイト', display_en:'WHITE'},
+    {input_color:'ネイビー', display_jp:'紺', display_common:'ネイビー', display_en:'NAVY'},
+    {input_color:'濃紺', display_jp:'紺', display_common:'ネイビー', display_en:'NAVY'},
+    {input_color:'ブラウン', display_jp:'茶', display_common:'ブラウン', display_en:'BROWN'},
+    {input_color:'茶色', display_jp:'茶', display_common:'ブラウン', display_en:'BROWN'},
+    {input_color:'グレー', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'グレイ', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'灰色', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'レッド', display_jp:'赤', display_common:'レッド', display_en:'RED'},
+    {input_color:'ブルー', display_jp:'青', display_common:'ブルー', display_en:'BLUE'},
+    {input_color:'グリーン', display_jp:'緑', display_common:'グリーン', display_en:'GREEN'},
+    {input_color:'イエロー', display_jp:'黄色', display_common:'イエロー', display_en:'YELLOW'},
+    {input_color:'黄色', display_jp:'黄色', display_common:'イエロー', display_en:'YELLOW'},
+    {input_color:'パープル', display_jp:'紫', display_common:'パープル', display_en:'PURPLE'},
+    {input_color:'金', display_jp:'金', display_common:'ゴールド', display_en:'GOLD'},
+    {input_color:'銀', display_jp:'銀', display_common:'シルバー', display_en:'SILVER'},
+    {input_color:'マルチカラー', display_jp:'マルチカラー', display_common:'マルチカラー', display_en:'MULTICOLOR'},
+    {input_color:'水色', display_jp:'水色', display_common:'ライトブルー', display_en:'LIGHT BLUE'},
+    {input_color:'サックス', display_jp:'水色', display_common:'ライトブルー', display_en:'LIGHT BLUE'},
+    {input_color:'生成り', display_jp:'生成り', display_common:'オフホワイト', display_en:'OFF WHITE'},
+    {input_color:'チャコールグレー', display_jp:'チャコールグレー', display_common:'チャコールグレー', display_en:'CHARCOAL'},
+    {input_color:'black', display_jp:'黒', display_common:'ブラック', display_en:'BLACK'},
+    {input_color:'white', display_jp:'白', display_common:'ホワイト', display_en:'WHITE'},
+    {input_color:'navy', display_jp:'紺', display_common:'ネイビー', display_en:'NAVY'},
+    {input_color:'gray', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'grey', display_jp:'灰色', display_common:'グレー', display_en:'GRAY'},
+    {input_color:'brown', display_jp:'茶', display_common:'ブラウン', display_en:'BROWN'},
+    {input_color:'beige', display_jp:'ベージュ', display_common:'ベージュ', display_en:'BEIGE'}
+  ],
+
+  /* ===== 04 素材辞書 ===== */
+  materials: [
+    {material:'カシミヤ', english:'CASHMERE', feature:'柔らかな肌触りと上品な風合い', season:'秋冬', premium_flag:true},
+    {material:'ウール', english:'WOOL', feature:'保温性があり上品な質感', season:'秋冬', premium_flag:true},
+    {material:'リネン', english:'LINEN', feature:'通気性が高く清涼感のある素材', season:'春夏', premium_flag:false},
+    {material:'シルク', english:'SILK', feature:'滑らかな肌触りと自然な光沢', season:'通年', premium_flag:true},
+    {material:'コットン', english:'COTTON', feature:'肌触りが良く扱いやすい素材', season:'通年', premium_flag:false},
+    {material:'ポリエステル', english:'POLYESTER', feature:'シワになりにくくお手入れしやすい素材', season:'通年', premium_flag:false},
+    {material:'ナイロン', english:'NYLON', feature:'軽くて丈夫な素材', season:'通年', premium_flag:false},
+    {material:'レーヨン', english:'RAYON', feature:'とろみのある落ち感と光沢', season:'春夏', premium_flag:false},
+    {material:'アクリル', english:'ACRYLIC', feature:'軽くて暖かく発色が良い素材', season:'秋冬', premium_flag:false},
+    {material:'モヘア', english:'MOHAIR', feature:'ふんわりとした毛足と光沢感', season:'秋冬', premium_flag:true},
+    {material:'アルパカ', english:'ALPACA', feature:'軽く保温性に優れた上質な獣毛', season:'秋冬', premium_flag:true},
+    {material:'アンゴラ', english:'ANGORA', feature:'柔らかく毛足の長い上品な風合い', season:'秋冬', premium_flag:true},
+    {material:'本革', english:'LEATHER', feature:'使うほどに風合いが増す天然皮革', season:'通年', premium_flag:true},
+    {material:'ラムレザー', english:'LAMBSKIN', feature:'しっとり柔らかい羊革', season:'通年', premium_flag:true},
+    {material:'スエード', english:'SUEDE', feature:'起毛した柔らかな表情の革', season:'秋冬', premium_flag:true},
+    {material:'エナメル', english:'PATENT LEATHER', feature:'艶やかな光沢のある革', season:'通年', premium_flag:false},
+    {material:'合成皮革', english:'SYNTHETIC LEATHER', feature:'軽くて扱いやすい革調素材', season:'通年', premium_flag:false},
+    {material:'PVC', english:'PVC', feature:'汚れや水に強いコーティング素材', season:'通年', premium_flag:false},
+    {material:'デニム', english:'DENIM', feature:'丈夫で着るほどに味が出る綾織り', season:'通年', premium_flag:false},
+    {material:'ダウン', english:'DOWN', feature:'軽くて暖かい天然の羽毛', season:'秋冬', premium_flag:true},
+    {material:'キャンバス', english:'CANVAS', feature:'厚手で丈夫な平織り生地', season:'通年', premium_flag:false},
+    {material:'ムートン', english:'MOUTON', feature:'羊の毛皮ならではの暖かさ', season:'秋冬', premium_flag:true},
+    {material:'ツイード', english:'TWEED', feature:'立体感のある織りと上品な表情', season:'秋冬', premium_flag:true},
+    {material:'コーデュロイ', english:'CORDUROY', feature:'畝のある起毛素材で暖かみのある表情', season:'秋冬', premium_flag:false},
+    {material:'サテン', english:'SATIN', feature:'なめらかな光沢のある生地', season:'通年', premium_flag:false},
+    {material:'キュプラ', english:'CUPRA', feature:'滑りが良く吸湿性に優れた素材', season:'通年', premium_flag:false},
+    {material:'ゴアテックス', english:'GORE-TEX', feature:'防水性と透湿性を両立した素材', season:'通年', premium_flag:true}
+  ],
+
+  /* ===== 05 状態表現辞書（メルカリ6段階） ===== */
+  conditions: [
+    {condition:'新品、未使用', badge:'新品未使用', acceptable_expression:'使用感のない新品未使用のお品です。', avoid_expression:'絶対新品'},
+    {condition:'未使用に近い', badge:'美品', acceptable_expression:'使用感が少なく、全体的にきれいな状態です。', avoid_expression:'新品同様'},
+    {condition:'目立った傷や汚れなし', badge:'美品', acceptable_expression:'多少の使用感はございますが、目立つ傷や汚れは見受けられません。', avoid_expression:'極美品'},
+    {condition:'やや傷や汚れあり', badge:'', acceptable_expression:'使用に伴う傷や汚れがございます。詳細は商品説明・写真をご確認ください。', avoid_expression:'美品'},
+    {condition:'傷や汚れあり', badge:'', acceptable_expression:'使用感があり、傷や汚れがございます。気になる箇所は写真をご確認ください。', avoid_expression:'美品'},
+    {condition:'全体的に状態が悪い', badge:'', acceptable_expression:'全体的に使用感と傷みがございます。状態をご理解のうえご検討ください。', avoid_expression:'使用に問題なし'}
+  ],
+
+  /* ===== 06 高値ワード辞書 ===== */
+  highValue: [
+    {keyword:'極美品', category:'共通', required_condition:'状態が非常に良い', priority:10, notes:'状態根拠必須', rule:{type:'condition', value:['未使用に近い']}},
+    {keyword:'美品', category:'共通', required_condition:'状態良好', priority:9, notes:'状態根拠必須', rule:{type:'condition', value:['未使用に近い','目立った傷や汚れなし']}},
+    {keyword:'希少', category:'共通', required_condition:'希少性の根拠あり', priority:8, notes:'推測禁止', rule:{type:'user_confirmed'}},
+    {keyword:'大きいサイズ', category:'アパレル', required_condition:'L以上またはブランド基準', priority:7, notes:'', rule:{type:'size_min', value:'L'}},
+    {keyword:'カシミヤ', category:'アパレル', required_condition:'素材表記あり', priority:9, notes:'', rule:{type:'material', value:'カシミヤ'}},
+    {keyword:'本革', category:'バッグ・靴・衣類', required_condition:'素材確認済み', priority:9, notes:'', rule:{type:'material', value:'本革'}},
+    {keyword:'現行', category:'共通', required_condition:'現行モデル確認済み', priority:8, notes:'推測禁止', rule:{type:'user_confirmed'}},
+    {keyword:'近年モデル', category:'共通', required_condition:'年代確認済み', priority:7, notes:'推測禁止', rule:{type:'user_confirmed'}},
+    {keyword:'アーカイブ', category:'ファッション', required_condition:'年代・ライン根拠あり', priority:8, notes:'推測禁止', rule:{type:'user_confirmed'}},
+    {keyword:'シルク', category:'アパレル', required_condition:'素材表記あり', priority:8, notes:'', rule:{type:'material', value:'シルク'}},
+    {keyword:'ウール', category:'アパレル', required_condition:'素材表記あり', priority:6, notes:'', rule:{type:'material', value:'ウール'}},
+    {keyword:'ラムレザー', category:'バッグ・靴・衣類', required_condition:'素材確認済み', priority:8, notes:'', rule:{type:'material', value:'ラムレザー'}},
+    {keyword:'小さいサイズ', category:'アパレル', required_condition:'S以下またはブランド基準', priority:6, notes:'', rule:{type:'size_max', value:'S'}},
+    {keyword:'日本製', category:'共通', required_condition:'品質表示で生産国を確認済み', priority:7, notes:'タグ写真で確認', rule:{type:'country', value:'日本'}},
+    {keyword:'イタリア製', category:'共通', required_condition:'品質表示で生産国を確認済み', priority:8, notes:'タグ写真で確認', rule:{type:'country', value:'イタリア'}},
+    {keyword:'フランス製', category:'共通', required_condition:'品質表示で生産国を確認済み', priority:8, notes:'タグ写真で確認', rule:{type:'country', value:'フランス'}},
+    {keyword:'タグ付き', category:'共通', required_condition:'新品で下げ札が付いている', priority:9, notes:'付属品欄に下げ札の記載が必要', rule:{type:'condition', value:['新品、未使用']}},
+    {keyword:'完売', category:'共通', required_condition:'公式で完売を確認済み', priority:7, notes:'推測禁止', rule:{type:'user_confirmed'}},
+    {keyword:'人気', category:'共通', required_condition:'定番・人気モデルであることを確認済み', priority:5, notes:'多用しない', rule:{type:'user_confirmed'}},
+    {keyword:'定番', category:'共通', required_condition:'ブランドの定番ラインであることを確認済み', priority:5, notes:'', rule:{type:'user_confirmed'}},
+    {keyword:'セットアップ可', category:'アパレル', required_condition:'同素材の上下が揃っている', priority:6, notes:'', rule:{type:'user_confirmed'}}
+  ],
+
+  /* ===== 07 コーデ提案辞書 ===== */
+  coords: [
+    {item_category:'テーラードジャケット', color:'ブラック', style:'きれいめ', coordinate:'白シャツとスラックスを合わせたビジネススタイル'},
+    {item_category:'テーラードジャケット', color:'ブラック', style:'カジュアル', coordinate:'白Tシャツとデニムを合わせた大人カジュアル'},
+    {item_category:'テーラードジャケット', color:'ネイビー', style:'きれいめ', coordinate:'ブルーシャツとグレーパンツで爽やかなオフィススタイル'},
+    {item_category:'テーラードジャケット', color:'ネイビー', style:'カジュアル', coordinate:'ボーダーカットソーとチノパンでこなれた休日スタイル'},
+    {item_category:'ダウンジャケット', color:'ブラック', style:'きれいめ', coordinate:'タートルネックニットとテーパードパンツで上品な冬スタイル'},
+    {item_category:'ダウンジャケット', color:'ブラック', style:'カジュアル', coordinate:'パーカーとデニムを合わせた冬の定番カジュアル'},
+    {item_category:'コート', color:'キャメル', style:'きれいめ', coordinate:'白ニットと黒パンツを合わせた上品な秋冬コーデ'},
+    {item_category:'コート', color:'キャメル', style:'カジュアル', coordinate:'グレースウェットとデニムで抜け感のある大人カジュアル'},
+    {item_category:'コート', color:'グレー', style:'きれいめ', coordinate:'黒ニットとプリーツスカートで落ち着いたワントーン'},
+    {item_category:'コート', color:'グレー', style:'カジュアル', coordinate:'白スニーカーとワイドパンツでリラックス感のある装い'},
+    {item_category:'トレンチコート', color:'ベージュ', style:'きれいめ', coordinate:'ネイビーニットとセンタープレスパンツで通勤スタイル'},
+    {item_category:'トレンチコート', color:'ベージュ', style:'カジュアル', coordinate:'ボーダーTシャツとデニム、スニーカーで春の定番コーデ'},
+    {item_category:'Tシャツ', color:'ホワイト', style:'きれいめ', coordinate:'ジャケットとスラックスのインナーにして清潔感のある装い'},
+    {item_category:'Tシャツ', color:'ホワイト', style:'カジュアル', coordinate:'デニムとスニーカーを合わせたシンプルな休日スタイル'},
+    {item_category:'Tシャツ', color:'ブラック', style:'きれいめ', coordinate:'サテンスカートと合わせた大人のモノトーンコーデ'},
+    {item_category:'Tシャツ', color:'ブラック', style:'カジュアル', coordinate:'カーゴパンツとキャップで程よくラフなスタイル'},
+    {item_category:'シャツ', color:'ホワイト', style:'きれいめ', coordinate:'ネイビーのテーパードパンツとローファーでオフィスカジュアル'},
+    {item_category:'シャツ', color:'ホワイト', style:'カジュアル', coordinate:'羽織りとしてTシャツとデニムに重ねたこなれコーデ'},
+    {item_category:'ニット', color:'ベージュ', style:'きれいめ', coordinate:'黒パンツと革靴を合わせた上品な秋冬コーデ'},
+    {item_category:'ニット', color:'ベージュ', style:'カジュアル', coordinate:'ワイドデニムとスニーカーで柔らかな印象の休日スタイル'},
+    {item_category:'ニット', color:'グレー', style:'きれいめ', coordinate:'白シャツをレイヤードしてスラックスと合わせた知的な装い'},
+    {item_category:'ニット', color:'グレー', style:'カジュアル', coordinate:'ブラックデニムとブーツで秋冬のリラックススタイル'},
+    {item_category:'カーディガン', color:'ネイビー', style:'きれいめ', coordinate:'ブラウスとフレアスカートを合わせた上品な羽織りコーデ'},
+    {item_category:'カーディガン', color:'ネイビー', style:'カジュアル', coordinate:'白Tシャツとデニムに肩掛けしたマリン風スタイル'},
+    {item_category:'パーカー', color:'グレー', style:'きれいめ', coordinate:'テーラードジャケットのインナーにして大人のミックススタイル'},
+    {item_category:'パーカー', color:'グレー', style:'カジュアル', coordinate:'デニムとスニーカーで定番のリラックスコーデ'},
+    {item_category:'ワンピース', color:'ブラック', style:'きれいめ', coordinate:'パールアクセサリーとパンプスでセレモニーにも使える装い'},
+    {item_category:'ワンピース', color:'ブラック', style:'カジュアル', coordinate:'デニムジャケットとスニーカーで程よく外したスタイル'},
+    {item_category:'パンツ', color:'ブラック', style:'きれいめ', coordinate:'ブラウスとパンプスを合わせたオフィススタイル'},
+    {item_category:'パンツ', color:'ブラック', style:'カジュアル', coordinate:'ロゴスウェットとスニーカーでこなれたモノトーン'},
+    {item_category:'デニム', color:'ブルー', style:'きれいめ', coordinate:'白シャツとローファーで清潔感のある大人デニムスタイル'},
+    {item_category:'デニム', color:'ブルー', style:'カジュアル', coordinate:'ボーダーTシャツとスニーカーで定番のカジュアルコーデ'},
+    {item_category:'スカート', color:'ベージュ', style:'きれいめ', coordinate:'白ブラウスとパンプスで柔らかなオフィスコーデ'},
+    {item_category:'スカート', color:'ベージュ', style:'カジュアル', coordinate:'ロゴTシャツとスニーカーで甘さを抑えたスタイル'},
+    {item_category:'スニーカー', color:'ホワイト', style:'きれいめ', coordinate:'テーパードパンツとジャケットで抜け感を出したきれいめカジュアル'},
+    {item_category:'スニーカー', color:'ホワイト', style:'カジュアル', coordinate:'デニムとパーカーで動きやすい休日スタイル'},
+    {item_category:'パンプス', color:'ベージュ', style:'きれいめ', coordinate:'ネイビーのワンピースと合わせた上品なお呼ばれスタイル'},
+    {item_category:'パンプス', color:'ベージュ', style:'カジュアル', coordinate:'アンクル丈デニムと合わせて足元をすっきり見せるコーデ'},
+    {item_category:'ショルダーバッグ', color:'ブラック', style:'きれいめ', coordinate:'ジャケットとスラックスのオフィスコーデに合わせやすい一品'},
+    {item_category:'ショルダーバッグ', color:'ブラック', style:'カジュアル', coordinate:'Tシャツとデニムのシンプルコーデのアクセントに'},
+    {item_category:'トートバッグ', color:'ブラウン', style:'きれいめ', coordinate:'トレンチコートと合わせた通勤スタイル'},
+    {item_category:'トートバッグ', color:'ブラウン', style:'カジュアル', coordinate:'ニットとワイドパンツの休日コーデに'}
+  ],
+
+  /* ===== 08 タイトルテンプレート ===== */
+  titleTemplates: {
+    mercari: {order:['badge','brand','item','color','size','highValue','model','brandKeywords','categoryKeywords','material','colorAlt','gender'], min:38, max:39},
+    yahoo: {order:['badge','brand','item','model','color','size','material','features','keywords'], min:98, max:99}
+  },
+
+  /* ===== 09 禁止・注意ワード（根拠がない場合に使用禁止） ===== */
+  forbidden: ['確実に正規品','100％本物','新品同様','未使用品','限定品','世界限定','国内完売','入手困難','激レア','希少','最高級','現行モデル','芸能人着用','○○愛用','ヴィンテージ','デッドストック','一点物'],
+  fillerWords: ['シンプルデザイン','おしゃれ','かわいい','素敵','便利','おすすめ'],
+
+  /* ===== 10 出品サンプル（メルカリ） ===== */
+  samplesMercari: [
+    {"category":"テーラードジャケット","title":"【美品】BURBERRY バーバリー テーラードジャケット 紺 38 ウール","description":"ご覧いただきありがとうございます。\nBURBERRYのウールテーラードジャケットです。きれいなシルエットで、ビジネスにもセレモニーにもお使いいただけます。\n\n■ブランド\nBURBERRY（バーバリー）\n\n■アイテム\nテーラードジャケット（2B・裏地付き）\n\n■カラー\nネイビー 紺 NAVY\n\n■サイズ\n表記 38（M相当）\n\n■実寸（平置き）\n肩幅 38cm／身幅 46cm／袖丈 58cm／着丈 64cm\n\n■素材\nウール 100％（裏地 キュプラ）\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\n白シャツとスラックスを合わせたビジネススタイル、白Tシャツとデニムの大人カジュアルにも合わせやすい一着です。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"ダウンジャケット","title":"【美品】MONCLER モンクレール ダウンジャケット 黒 1 フード付き 冬","description":"ご覧いただきありがとうございます。\nMONCLERのフード付きダウンジャケットです。軽くて暖かく、冬の通勤や普段使いに活躍します。\n\n■ブランド\nMONCLER（モンクレール）\n\n■アイテム\nダウンジャケット（フード取り外し可）\n\n■カラー\nブラック 黒 BLACK\n\n■サイズ\n表記 1（S〜M相当）\n\n■実寸（平置き）\n肩幅 40cm／身幅 50cm／袖丈 62cm／着丈 66cm\n\n■素材\n表地 ナイロン 100％／中綿 ダウン 90％・フェザー 10％\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。ワッペンの欠けもございません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\nタートルネックニットとテーパードパンツで上品に、パーカーとデニムで冬の定番カジュアルにも。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"Tシャツ","title":"【新品未使用】UNIQLO ユニクロ Tシャツ 白 L コットン 半袖 無地","description":"ご覧いただきありがとうございます。\nUNIQLOのコットン半袖Tシャツです。購入後、袖を通さずに保管していました。\n\n■ブランド\nUNIQLO（ユニクロ）\n\n■アイテム\nクルーネック半袖Tシャツ（無地）\n\n■カラー\nホワイト 白 WHITE\n\n■サイズ\n表記 L\n\n■実寸（平置き）\n肩幅 46cm／身幅 54cm／袖丈 20cm／着丈 70cm\n\n■素材\nコットン 100％\n\n■状態\n新品、未使用\n使用感のない新品未使用のお品です。\n\n■付属品\n下げ札付き\n\n■コーディネート\nジャケットのインナーにも、デニムとスニーカーのシンプルな休日スタイルにも使えます。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"ニット","title":"【美品】Loro Piana ロロピアーナ ニット ベージュ 38 カシミヤ","description":"ご覧いただきありがとうございます。\nLoro Pianaのカシミヤニットです。柔らかな肌触りと上品な風合いが魅力の一枚です。\n\n■ブランド\nLoro Piana（ロロピアーナ）\n\n■アイテム\nクルーネックニット\n\n■カラー\nベージュ BEIGE\n\n■サイズ\n表記 38（S〜M相当）\n\n■実寸（平置き）\n肩幅 39cm／身幅 45cm／袖丈 58cm／着丈 58cm\n\n■素材\nカシミヤ 100％（品質表示にて確認済み）\n\n■状態\n未使用に近い\n使用感が少なく、全体的にきれいな状態です。毛玉もほとんど見られません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\n黒パンツと革靴を合わせた上品な秋冬コーデに合わせやすい色合いです。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"ワンピース","title":"【美品】FOXEY フォクシー ワンピース 紺 40 膝丈 Aライン ネイビー","description":"ご覧いただきありがとうございます。\nFOXEYの膝丈ワンピースです。きれいなAラインで、お呼ばれや学校行事にもお使いいただけます。\n\n■ブランド\nFOXEY（フォクシー）\n\n■アイテム\n膝丈ワンピース（Aライン・ノースリーブ）\n\n■カラー\nネイビー 紺 NAVY\n\n■サイズ\n表記 40（M相当）\n\n■実寸（平置き）\n肩幅 34cm／身幅 42cm／着丈 98cm\n\n■素材\nポリエステル 100％\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\nパールアクセサリーとパンプスでセレモニーに、カーディガンを羽織って通勤にも。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"パンツ","title":"【美品】Theory セオリー テーパードパンツ 黒 2 センタープレス 通勤","description":"ご覧いただきありがとうございます。\nTheoryのテーパードパンツです。ストレッチが効いていて、一日中きれいなシルエットが続きます。\n\n■ブランド\nTheory（セオリー）\n\n■アイテム\nテーパードパンツ（センタープレス）\n\n■カラー\nブラック 黒 BLACK\n\n■サイズ\n表記 2（M相当）\n\n■実寸（平置き）\nウエスト 35cm／股上 25cm／股下 68cm／わたり幅 29cm／裾幅 15cm\n\n■素材\nポリエステル 92％・ポリウレタン 8％\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\nブラウスとパンプスでオフィスに、スウェットとスニーカーでモノトーンカジュアルにも。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"スカート","title":"【美品】Max Mara マックスマーラ プリーツスカート 38 ウール 紺","description":"ご覧いただきありがとうございます。\nMax Maraのウールプリーツスカートです。動くたびにプリーツがきれいに揺れる一枚です。\n\n■ブランド\nMax Mara（マックスマーラ）\n\n■アイテム\nプリーツスカート（ミモレ丈）\n\n■カラー\nネイビー 紺 NAVY\n\n■サイズ\n表記 38（S〜M相当）\n\n■実寸（平置き）\nウエスト 33cm／総丈 74cm／ヒップ 48cm\n\n■素材\nウール 100％\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。プリーツの取れもございません。\n\n■付属品\nなし（本体のみ）\n\n■コーディネート\n白ブラウスとパンプスで柔らかなオフィスコーデに。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"スニーカー","title":"【美品】NIKE ナイキ エアフォース1 スニーカー 白 24.5cm レザー","description":"ご覧いただきありがとうございます。\nNIKEのエアフォース1です。どんなコーデにも合わせやすい白のローカットです。\n\n■ブランド\nNIKE（ナイキ）\n\n■アイテム\nエアフォース1 ロー スニーカー\n\n■カラー\nホワイト 白 WHITE\n\n■サイズ\n表記 24.5cm\n\n■実寸（平置き）\nアウトソール 約27cm\n\n■素材\nアッパー 本革／ソール ラバー\n\n■状態\n目立った傷や汚れなし\n数回着用のみで、ソールの減りもほとんどございません。\n\n■付属品\n箱付き\n\n■コーディネート\nテーパードパンツとジャケットのきれいめカジュアルにも、デニムの休日スタイルにも。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"パンプス","title":"【美品】Ferragamo フェラガモ パンプス ヴァラ 黒 6 本革 リボン","description":"ご覧いただきありがとうございます。\nSalvatore Ferragamoのヴァラリボンパンプスです。ブランドを代表するデザインで、きちんとした場にも安心してお履きいただけます。\n\n■ブランド\nSalvatore Ferragamo（サルヴァトーレフェラガモ）\n\n■アイテム\nヴァラ パンプス（ローヒール）\n\n■カラー\nブラック 黒 BLACK\n\n■サイズ\n表記 6（23.5cm相当）\n\n■実寸（平置き）\nアウトソール 約25cm／ヒール高 約3cm\n\n■素材\n本革（カーフ）\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。\n\n■付属品\n保存袋\n\n■コーディネート\nネイビーのワンピースと合わせた上品なお呼ばれスタイルに。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"ショルダーバッグ","title":"【美品】COACH コーチ ショルダーバッグ シグネチャー 茶 PVC 肩掛け","description":"ご覧いただきありがとうございます。\nCOACHのシグネチャー柄ショルダーバッグです。程よいサイズで、普段使いにちょうど良い一品です。\n\n■ブランド\nCOACH（コーチ）\n\n■アイテム\nショルダーバッグ（シグネチャー）\n\n■カラー\nブラウン 茶 BROWN\n\n■サイズ\n縦 18cm／横 25cm／マチ 7cm／ショルダー 約110〜125cm（調整可）\n\n■素材\nPVC×本革\n\n■状態\n目立った傷や汚れなし\n角スレ・内側の汚れもなく、きれいな状態です。\n\n■付属品\n保存袋\n\n■コーディネート\nジャケットのオフィスコーデにも、Tシャツとデニムのシンプルコーデのアクセントにも。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"長財布","title":"【美品】GUCCI グッチ 長財布 GG シェリーライン 黒 本革 ラウンド","description":"ご覧いただきありがとうございます。\nGUCCIのシェリーライン入りラウンドファスナー長財布です。収納力があり使いやすいお品です。\n\n■ブランド\nGUCCI（グッチ）\n\n■アイテム\nラウンドファスナー長財布（シェリーライン）\n\n■カラー\nブラック 黒 BLACK\n\n■サイズ\n縦 10cm／横 19cm／厚み 2.5cm\n\n■素材\n本革\n\n■状態\n目立った傷や汚れなし\nファスナーの開閉もスムーズです。角に小さなスレがございます。\n\n■付属品\n箱・保存袋\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"},
+    {"category":"アクセサリー","title":"【美品】TIFFANY ティファニー ネックレス オープンハート 銀 925","description":"ご覧いただきありがとうございます。\nTIFFANY & Co.のオープンハートネックレスです。華奢で毎日身につけやすいデザインです。\n\n■ブランド\nTIFFANY & Co.（ティファニー）\n\n■アイテム\nオープンハート ネックレス\n\n■カラー\nシルバー 銀 SILVER\n\n■サイズ\nチェーン全長 約41cm／トップ縦 約1.6cm・横 約1.6cm\n\n■素材\nシルバー925\n\n■状態\n目立った傷や汚れなし\nクリーニング済みです。細かな小傷はございますが、目立つものはございません。\n\n■付属品\n保存袋・箱\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送\n・防水対策をして、丁寧に梱包のうえ発送いたします。"}
+  ],
+
+  /* ===== 11 出品サンプル（ヤフオク） ===== */
+  samplesYahoo: [
+    {"category":"トレンチコート","title":"【美品】BURBERRY バーバリー トレンチコート ライナー付き ベージュ 38 M相当 コットン ノバチェック ベルト付き 春秋 レディース 通勤 アウター ロング丈 ダブルブレスト 撥水 9号","description":"BURBERRYのライナー付きトレンチコートです。裏地のノバチェックがのぞく、ブランドを代表するアイテムです。\n\n■ブランド\nBURBERRY（バーバリー）\n\n■アイテム\nトレンチコート（ダブルブレスト・ライナー付き・ベルト付き）\n\n■カラー\nベージュ BEIGE\n\n■サイズ\n表記 38（M相当・9号）\n\n■実寸（平置き）\n肩幅 40cm／身幅 50cm／袖丈 58cm／着丈 105cm\n\n■素材\n表地 コットン 100％／ライナー ウール\n\n■状態\n目立った傷や汚れなし\n多少の使用感はございますが、目立つ傷や汚れは見受けられません。\n\n■付属品\nライナー・ベルト\n\n■コーディネート\nネイビーニットとセンタープレスパンツで通勤スタイルに。\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送・お取引\n・落札後3日以内のご連絡、お支払いをお願いいたします。\n・防水対策をして、丁寧に梱包のうえ発送いたします。\n・ノークレーム・ノーリターンでお願いいたします。"},
+    {"category":"ショルダーバッグ","title":"【美品】COACH コーチ ショルダーバッグ シグネチャー 茶 ブラウン PVC×本革 斜め掛け 2way 肩掛け ロゴ金具 保存袋付き レディース 通勤 普段使い A5収納 本革ストラップ 軽量","description":"COACHのシグネチャー柄2wayショルダーバッグです。斜め掛けと肩掛けの2通りでお使いいただけます。\n\n■ブランド\nCOACH（コーチ）\n\n■アイテム\n2way ショルダーバッグ（シグネチャー）\n\n■カラー\nブラウン 茶 BROWN\n\n■サイズ\n縦 18cm／横 25cm／マチ 7cm／持ち手 約40cm／ショルダー 約110〜125cm\n\n■素材\nPVC×本革\n\n■状態\n目立った傷や汚れなし\n角スレ・内側の汚れもなく、きれいな状態です。\n\n■付属品\n保存袋・ショルダーストラップ\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送・お取引\n・落札後3日以内のご連絡、お支払いをお願いいたします。\n・防水対策をして、丁寧に梱包のうえ発送いたします。\n・ノークレーム・ノーリターンでお願いいたします。"},
+    {"category":"ダウンジャケット","title":"【新品未使用】UNIQLO ユニクロ ウルトラライトダウン ジャケット 黒 ブラック L ナイロン 軽量 ポケッタブル 収納袋付き タグ付き 防寒 秋冬 アウター レディース インナーダウン 重ね着","description":"UNIQLOのウルトラライトダウンジャケットです。購入後、袖を通さずに保管していました。\n\n■ブランド\nUNIQLO（ユニクロ）\n\n■アイテム\nウルトラライトダウンジャケット\n\n■カラー\nブラック 黒 BLACK\n\n■サイズ\n表記 L\n\n■実寸（平置き）\n肩幅 40cm／身幅 50cm／袖丈 60cm／着丈 60cm\n\n■素材\n表地 ナイロン 100％／中綿 ダウン 90％・フェザー 10％\n\n■状態\n新品、未使用\n使用感のない新品未使用のお品です。\n\n■付属品\n収納袋・下げ札\n\n■ご注意\n・平置きでの素人採寸のため、多少の誤差はご容赦ください。\n・お使いのモニターにより、実物と色味が異なって見える場合がございます。\n・中古品であることをご理解のうえ、ご購入をお願いいたします。\n\n■発送・お取引\n・落札後3日以内のご連絡、お支払いをお願いいたします。\n・防水対策をして、丁寧に梱包のうえ発送いたします。\n・ノークレーム・ノーリターンでお願いいたします。"}
+  ],
+
+  /* ===== 12 ブランド別キーワード（商品に該当すると確認できる場合のみ使用） ===== */
+  brandKeywords: [
+    {brand:'BURBERRY', keyword:'ノバチェック', category:'共通', priority:10},
+    {brand:'BURBERRY', keyword:'ホースフェリー', category:'共通', priority:8},
+    {brand:'BURBERRY', keyword:'トレンチコート', category:'アウター', priority:9},
+    {brand:'BURBERRY', keyword:'ライナー付き', category:'アウター', priority:7},
+    {brand:'GUCCI', keyword:'GG', category:'共通', priority:10},
+    {brand:'GUCCI', keyword:'シェリーライン', category:'共通', priority:9},
+    {brand:'GUCCI', keyword:'インターロッキング', category:'共通', priority:9},
+    {brand:'GUCCI', keyword:'バンブー', category:'バッグ', priority:8},
+    {brand:'GUCCI', keyword:'ホースビット', category:'靴', priority:8},
+    {brand:'LOUIS VUITTON', keyword:'モノグラム', category:'バッグ', priority:10},
+    {brand:'LOUIS VUITTON', keyword:'ダミエ', category:'バッグ', priority:10},
+    {brand:'LOUIS VUITTON', keyword:'エピ', category:'バッグ', priority:9},
+    {brand:'LOUIS VUITTON', keyword:'ヴェルニ', category:'バッグ', priority:8},
+    {brand:'LOUIS VUITTON', keyword:'ダミエアズール', category:'バッグ', priority:9},
+    {brand:'CHANEL', keyword:'ココマーク', category:'共通', priority:10},
+    {brand:'CHANEL', keyword:'マトラッセ', category:'バッグ', priority:10},
+    {brand:'CHANEL', keyword:'キャビアスキン', category:'バッグ', priority:9},
+    {brand:'CHANEL', keyword:'ツイード', category:'アパレル', priority:9},
+    {brand:'CHANEL', keyword:'チェーンショルダー', category:'バッグ', priority:9},
+    {brand:'COACH', keyword:'シグネチャー', category:'共通', priority:10},
+    {brand:'COACH', keyword:'オプアート', category:'共通', priority:8},
+    {brand:'COACH', keyword:'タビー', category:'バッグ', priority:8},
+    {brand:'PRADA', keyword:'サフィアーノ', category:'共通', priority:10},
+    {brand:'PRADA', keyword:'三角ロゴ', category:'共通', priority:10},
+    {brand:'PRADA', keyword:'テスート', category:'バッグ', priority:9},
+    {brand:'HERMES', keyword:'Hロゴ', category:'共通', priority:10},
+    {brand:'HERMES', keyword:'セリエ', category:'共通', priority:8},
+    {brand:'HERMES', keyword:'カレ', category:'小物', priority:9},
+    {brand:'FENDI', keyword:'ズッカ', category:'共通', priority:10},
+    {brand:'FENDI', keyword:'ペカン', category:'共通', priority:8},
+    {brand:'CELINE', keyword:'トリオンフ', category:'共通', priority:10},
+    {brand:'CELINE', keyword:'マカダム', category:'共通', priority:8},
+    {brand:'Dior', keyword:'トロッター', category:'共通', priority:10},
+    {brand:'Dior', keyword:'サドル', category:'バッグ', priority:9},
+    {brand:'Dior', keyword:'オブリーク', category:'共通', priority:9},
+    {brand:'kate spade', keyword:'スペードマーク', category:'共通', priority:9},
+    {brand:'MICHAEL KORS', keyword:'MKロゴ', category:'共通', priority:9},
+    {brand:'MICHAEL KORS', keyword:'ジェットセット', category:'バッグ', priority:8},
+    {brand:'BOTTEGA VENETA', keyword:'イントレチャート', category:'共通', priority:10},
+    {brand:'LOEWE', keyword:'アナグラム', category:'共通', priority:10},
+    {brand:'LOEWE', keyword:'パズル', category:'バッグ', priority:9},
+    {brand:'SAINT LAURENT', keyword:'カサンドラ', category:'共通', priority:9},
+    {brand:'Salvatore Ferragamo', keyword:'ヴァラ', category:'靴', priority:10},
+    {brand:'Salvatore Ferragamo', keyword:'ガンチーニ', category:'共通', priority:9},
+    {brand:'Max Mara', keyword:'マニュエラ', category:'アウター', priority:10},
+    {brand:'Max Mara', keyword:'白タグ', category:'アパレル', priority:8},
+    {brand:'MONCLER', keyword:'ワッペン', category:'アウター', priority:8},
+    {brand:'Maison Margiela', keyword:'タビ', category:'靴', priority:10},
+    {brand:'Maison Margiela', keyword:'4ステッチ', category:'共通', priority:8},
+    {brand:'NIKE', keyword:'エアマックス', category:'靴', priority:10},
+    {brand:'NIKE', keyword:'ダンク', category:'靴', priority:10},
+    {brand:'NIKE', keyword:'スウッシュ', category:'共通', priority:9},
+    {brand:'NIKE', keyword:'エアフォース1', category:'靴', priority:10},
+    {brand:'adidas', keyword:'スリーストライプ', category:'共通', priority:9},
+    {brand:'adidas', keyword:'スタンスミス', category:'靴', priority:10},
+    {brand:'adidas', keyword:'スーパースター', category:'靴', priority:9},
+    {brand:'adidas', keyword:'トレフォイル', category:'共通', priority:8},
+    {brand:'UNIQLO', keyword:'ヒートテック', category:'トップス', priority:8},
+    {brand:'UNIQLO', keyword:'ウルトラライトダウン', category:'アウター', priority:10},
+    {brand:'UNIQLO', keyword:'感動パンツ', category:'ボトムス', priority:9},
+    {brand:'UNIQLO', keyword:'ユニクロユー', category:'共通', priority:9},
+    {brand:'UNIQLO', keyword:'プラスJ', category:'共通', priority:9},
+    {brand:'Patagonia', keyword:'レトロX', category:'アウター', priority:10},
+    {brand:'Patagonia', keyword:'シンチラ', category:'アウター', priority:9},
+    {brand:'Patagonia', keyword:'ナノパフ', category:'アウター', priority:8},
+    {brand:'THE NORTH FACE', keyword:'ヌプシ', category:'アウター', priority:10},
+    {brand:'THE NORTH FACE', keyword:'マウンテンライト', category:'アウター', priority:9},
+    {brand:'THE NORTH FACE', keyword:'バルトロ', category:'アウター', priority:10},
+    {brand:'New Balance', keyword:'996', category:'靴', priority:9},
+    {brand:'CONVERSE', keyword:'オールスター', category:'靴', priority:10},
+    {brand:'Ralph Lauren', keyword:'ポニー刺繍', category:'共通', priority:8},
+    {brand:'LACOSTE', keyword:'ワニロゴ', category:'共通', priority:8},
+    {brand:'FRED PERRY', keyword:'月桂樹ロゴ', category:'共通', priority:8},
+    {brand:'Paul Smith', keyword:'マルチストライプ', category:'共通', priority:9},
+    {brand:'TORY BURCH', keyword:'ダブルTロゴ', category:'共通', priority:9},
+    {brand:'LONGCHAMP', keyword:'ル・プリアージュ', category:'バッグ', priority:10},
+    {brand:'FEILER', keyword:'シュニール織', category:'共通', priority:8},
+    {brand:'Dr.Martens', keyword:'8ホール', category:'靴', priority:9},
+    {brand:'CANADA GOOSE', keyword:'ジャスパー', category:'アウター', priority:9},
+    {brand:'SUPREME', keyword:'ボックスロゴ', category:'共通', priority:10}
+  ],
+
+  /* ===== 13 入力テンプレート（22項目） ===== */
+  inputFields: [
+    {key:'brand', label:'ブランド名', type:'text', placeholder:'例：BURBERRY／バーバリー'},
+    {key:'item', label:'アイテム名', type:'text', placeholder:'例：トレンチコート'},
+    {key:'model', label:'型番', type:'text', placeholder:'例：品番・モデル名（分かる場合のみ）'},
+    {key:'refPrice', label:'参考価格', type:'number', placeholder:'例：12000'},
+    {key:'color', label:'カラー', type:'select', placeholder:'色を選ぶ（例：黒）'},
+    {key:'material', label:'素材', type:'text', placeholder:'例：ウール100％（品質表示どおり）'},
+    {key:'sizeLabel', label:'表記サイズ', type:'text', placeholder:'例：M／38／24.5cm'},
+    {key:'shoulder', label:'肩幅', type:'measure', placeholder:'cm'},
+    {key:'chest', label:'身幅', type:'measure', placeholder:'cm'},
+    {key:'sleeve', label:'袖丈', type:'measure', placeholder:'cm'},
+    {key:'length', label:'着丈', type:'measure', placeholder:'cm'},
+    {key:'waist', label:'ウエスト', type:'measure', placeholder:'cm'},
+    {key:'rise', label:'股上', type:'measure', placeholder:'cm'},
+    {key:'inseam', label:'股下', type:'measure', placeholder:'cm'},
+    {key:'thigh', label:'わたり幅', type:'measure', placeholder:'cm'},
+    {key:'hem', label:'裾幅', type:'measure', placeholder:'cm'},
+    {key:'totalLength', label:'総丈', type:'measure', placeholder:'cm'},
+    {key:'condition', label:'状態', type:'select', placeholder:'メルカリの状態区分を選ぶ'},
+    {key:'damage', label:'傷・汚れ', type:'text', placeholder:'例：袖口に薄いスレ1か所'},
+    {key:'accessories', label:'付属品', type:'text', placeholder:'例：保存袋・下げ札'},
+    {key:'purchasedAt', label:'購入先', type:'text', placeholder:'例：百貨店／公式オンライン'},
+    {key:'features', label:'その他特徴', type:'text', placeholder:'例：ライナー付き・ポケット4つ'}
+  ],
+
+  /* 22項目にない採寸項目（バッグ・靴・小物用）。categories.size_fields と label で対応 */
+  extraMeasureFields: [
+    {key:'hip', label:'ヒップ', type:'measure', placeholder:'cm'},
+    {key:'outsole', label:'アウトソール', type:'measure', placeholder:'cm'},
+    {key:'heel', label:'ヒール高', type:'measure', placeholder:'cm'},
+    {key:'shaft', label:'筒丈', type:'measure', placeholder:'cm'},
+    {key:'h', label:'縦', type:'measure', placeholder:'cm'},
+    {key:'w', label:'横', type:'measure', placeholder:'cm'},
+    {key:'gusset', label:'マチ', type:'measure', placeholder:'cm'},
+    {key:'handle', label:'持ち手', type:'measure', placeholder:'cm'},
+    {key:'thickness', label:'厚み', type:'measure', placeholder:'cm'},
+    {key:'fullLength', label:'全長', type:'measure', placeholder:'cm'},
+    {key:'width', label:'幅', type:'measure', placeholder:'cm'},
+    {key:'bladeWidth', label:'大剣幅', type:'measure', placeholder:'cm'},
+    {key:'head', label:'頭周り', type:'measure', placeholder:'cm'},
+    {key:'brim', label:'つば', type:'measure', placeholder:'cm'},
+    {key:'topH', label:'トップ縦', type:'measure', placeholder:'cm'},
+    {key:'topW', label:'トップ横', type:'measure', placeholder:'cm'},
+    {key:'caseSize', label:'ケース径', type:'measure', placeholder:'mm'},
+    {key:'wrist', label:'腕周り', type:'measure', placeholder:'cm'}
+  ]
+};
+if(typeof window!=='undefined') window.RAITO_DICT=RAITO_DICT;
+if(typeof module!=='undefined') module.exports=RAITO_DICT;
+
+</script>
+<script>
+/* ref/bench_ex.js */
+var BENCH_EX = {"general":{"シャツ":{"n":61,"ex":[[1200,"美品オンシェリー Tシャツ 半袖カットソー 刺繍 袖"],[2700,"ロビンソンズ 半袖チェックシャツ コラトロン 米国製"],[6120,"美品パタゴニア フランネルワークシャツ オーガニック"]]},"バッグ":{"n":32,"ex":[[1600,"美品ステファン ショルダーバッグ レザー シボ ダー"],[5199,"イアパピヨネ レザーショルダーバッグ リュック 2w"],[12500,"美品フジタカ トートバッグ レザー シボ 濃紺 日本"]]},"スーツ":{"n":11,"ex":[[1499,"美品BG コムサ系列 スーツ セットアップ ウール "],[5504,"美品クリスチャンオラーニ スーツ セットアップ グレ"],[9999,"B&T CLUB メンズスーツ セットアップ 2XL"]]},"財布":{"n":7,"ex":[[2500,"美品コーチ 三つ折り財布 ウォレット レザー PVC"],[4200,"ダコタ アプローズ がま口二つ折り財布 本革 シボ "],[11970,"グッチ 長財布 レザー シボ シェリーライン バンブ"]]},"ダウン":{"n":3,"ex":[[2150,"美品バーンズアウトフィッターズ オックスフォードボタ"],[6000,"希少美品レフラー 中綿ダウンジャケット 迷彩 L 刺"],[9399,"美品ベルスタッフ ブラックレーベル ダウンジャケット"]]},"ジャケット":{"n":48,"ex":[[1530,"ユナイテッドアローズ ノーカラージャケット 刺繍 グ"],[3699,"23SSジャーナルスタンダード コットンポリエステル"],[8550,"美品ガルフィー デニムジャケット 刺繍 バイカラー "]]},"パンツ":{"n":20,"ex":[[900,"無印良品 ワイドデニム ジャパンファブリック オーガ"],[3600,"極美品リーバイス 510 スキニーデニム W32 L"],[7500,"エンズアンドミーンズ ショートパンツ M メッシュ "]]},"スカート":{"n":6,"ex":[[1399,"新品タグ付リリアンカラット デニムロングフレアスカー"],[2700,"マックスマーラ ロングタイトスカート ウール ベージ"],[49999,"アライア スカートセットアップスーツ ダブル 濃紺 "]]},"コート":{"n":11,"ex":[[1440,"美品グラム ピーコート ウール 濃紺 2 キルティン"],[4000,"マックレガー ダッフルコート ヴィンテージ ウール "],[6879,"美品マテリア 3wayロングファーコート アンゴラ "]]},"ニット":{"n":4,"ex":[[499,"美品イング 半袖ニット 黒 M モックネック レディ"],[2699,"美品シビラ カラーミックスローゲージプルオーバー ニ"],[9399,"美品カナタ カウチンニット ローゲージ カナダ製 9"]]},"ワンピース":{"n":3,"ex":[[1999,"ミラオーウェン ボートネックサテンナローロングワンピ"],[3600,"サルヴァトーレフェラガモ 膝丈ワンピース コットンリ"],[5310,"ボールジィ トゥモローランド マキシ丈ワンピース A"]]},"ネクタイ":{"n":4,"ex":[[1199,"美品モダリトルノ ネクタイ シルバー シルク イタリ"],[1799,"極美品ネイビー&グリーン ネクタイ シルク ソリッド"],[2290,"極美品ネイビー&グリーン ネクタイ シルク ソリッド"]]}},"brand":{"靴":{"n":27,"ex":[[8500,"トリーバーチ バレエシューズ ライラドライバー レザ"],[16800,"サルヴァトーレフェラガモ バミューダ ラバーシューズ"],[35000,"希少PRADA プラダ ソックスブーツ サイズ39 "]]},"財布":{"n":44,"ex":[[3700,"COACH ソーホー レザー 長財布 ブラック 人気"],[7000,"ケイトスペード コインケース ドット スモールジップ"],[15200,"GUCCI 長財布 シマレザー ラウンドファスナー "]]},"バッグ":{"n":67,"ex":[[4940,"MARC JACOBS チェーンストラップ バッグ用"],[7480,"コーチ ショルダーバッグ オプアート がま口 キスロ"],[12800,"美品希少PRIMACLASSE プリマクラッセ ボス"]]},"スカート":{"n":5,"ex":[[5500,"マッキントッシュ グレンチェック ミドル丈 ラップス"],[7000,"近年モデルFOXEY フォクシー デニムフリンジ膝丈"],[30000,"CHANEL デニムラップスカート ロング ココマー"]]},"ストール":{"n":19,"ex":[[5800,"FENDI スカーフ ズッカ柄 星座 ベージュ ブラ"],[10500,"ETRO シルクストール 花柄 ペイズリー シフォン"],[28000,"CHANEL スカーフ グリポア カメリア パール "]]},"アクセサリー":{"n":63,"ex":[[3500,"COACH フープピアス ラインストーン シルバー"],[6500,"希少極美品SWAROVSKI スワロフスキー ネック"],[10700,"MIKIMOTO パールイヤリング ハート アコヤ真"]]},"ネクタイ":{"n":32,"ex":[[2000,"Paul Stuart ネクタイ ブラック イタリア"],[4700,"HERMES ネクタイ ベルト柄 総柄 ネイビー フ"],[10000,"ルイヴィトン ネクタイ コンステレーションデニム モ"]]},"ジャケット":{"n":3,"ex":[[12000,"バーバリー ジャケット 大きいサイズ シルク ウール"],[18900,"Patagonia パタゴニア カルサイト ゴアテッ"],[21000,"極美品サルヴァトーレフェラガモ ガンチーニベルトニッ"]]},"シャツ":{"n":5,"ex":[[1200,"nano universe フレンチリネン 長袖シャ"],[1950,"大きいサイズ ストライプ スキッパー Aライン シャ"],[5900,"新品タグ付大きいサイズ 4L leswel フーデッ"]]},"ニット":{"n":7,"ex":[[5600,"D&G ドルチェアンドガッバーナ ノースリーブ フリ"],[9300,"ADORE アドーア ケーブル編み フリル ニット "],[23900,"ADEAM アディアム ニット×プリーツ ドッキング"]]},"コート":{"n":3,"ex":[[22000,"DOLCE&GABBANA ドルチェ&ガッバーナ ト"],[24800,"Aquascutum アクアスキュータム ラグランス"],[72500,"極美品HERNO ヘルノ ライナー付 フーディパイピ"]]}},"nonbrand":{"ジャケット":{"n":23,"ex":[[3200,"未使用 UNIQLOユニクロ 感動ジャケットジャケッ"],[7690,"美品 ソウルベリー 店長がつくったMIXナッツなカー"],[13000,"メゾンスペシャル ビッグファスナーポケットMA-1 "]]},"パンツ":{"n":17,"ex":[[1899,"新品未使用 ユニクロ ストレッチイージーアンクルパン"],[3199,"美品 familiar ファミリア ベビーオーバーオ"],[5000,"美品 ブラックバイマウジー カウヴィンテージデニム "]]},"スカート":{"n":9,"ex":[[1510,"RALPH LAUREN ラルフローレン フレアスカ"],[3990,"美品 アディダスオリジナルス サテンロングスカート "],[4490,"新品 アンタイトル スカート スーツ ビジネス リク"]]},"バッグ":{"n":41,"ex":[[4199,"美品 mont-bell ポケッタブル ライトバナナ"],[8000,"J*読様 美品 フェイラー ユニ トートバッグ ハン"],[18000,"美品 アニエスベー マリオン サークルバッグ レザー"]]},"靴":{"n":24,"ex":[[3390,"美品アディダス ランニングシューズ スニーカー ファ"],[8790,"美品 ドクターマーチン 1461 3ホール シューズ"],[14000,"超美品 ハンター リファインドエクスプローラー フラ"]]},"アクセサリー":{"n":11,"ex":[[400,"森*ん様 極美品 ハート型ブローチ パール クリスタ"],[6590,"新品 ジバンシー ネックレス ロゴ ストーン チェー"],[10290,"エムズグレイシー パーカー フリル ハート リボンブ"]]},"財布":{"n":5,"ex":[[3990,"美品 ユナイテッドアローズ ショルダーバッグ レザー"],[8699,"美品 アニエスベー カードケース 名刺入れ ロゴ レ"],[10000,"イルビゾンテ 二つ折り財布 ウォレット ブラック レ"]]},"スーツ":{"n":3,"ex":[[5000,"NIKE キッズセットアップ YTH NSW QZ "],[10290,"新品未使用 フリークスストア サウザンドマイル セッ"],[13000,"美品 モンベル ゴアテックス セットアップ レインウ"]]},"シャツ":{"n":24,"ex":[[2290,"新品 モンベル 半袖Ｔシャツ コーラルピンク M W"],[4400,"美品 セントジェームス エルボーパッチ付きウェッソン"],[7390,"新品未使用 ポロスポーツラルフローレン ポロシャツ "]]},"コート":{"n":4,"ex":[[3000,"専用、美品 ORIHICA RHYME トレンチコー"],[23990,"美品 サンヨーコート アンブレラコート ササールトレ"],[39225,"美品 ebure エブール ロンハーマン メルトンピ"]]},"ワンピース":{"n":4,"ex":[[490,"mirche ミルシェ ノースリーブ裾レースワンピー"],[7990,"新品未使用 アンフィーロ ランタンスリーブワンピース"],[12990,"Y's ワイズ ノースリーブワンピース ロング 総柄"]]},"ダウン":{"n":17,"ex":[[3000,"美品 UNIQLO ユニクロ ウルトラライトダウンジ"],[4400,"美品 ユニクロ ウルトラライトダウンリラックスジャケ"],[12000,"美品 トミーヒルフィガー ダウンジャケット ロング丈"]]},"ニット":{"n":5,"ex":[[3199,"UNIQLO ユニクロ タートルネックニット カシミ"],[7190,"美品 ラコステ アルパカブレンドタートルネックケーブ"],[11390,"美品 フレッドペリー ポロニット ハーフジップ ロゴ"]]},"ストール":{"n":4,"ex":[[5900,"美品 COACH コーチ シルク スカーフ シグネチ"],[8900,"未使用級 エトロ 大判ストール ウールシルク ペイズ"],[11000,"美品 LOEWE ロエベ フルーツ柄 スカーフ シル"]]}}};
+
+</script>
+<script>
+/* engine.js */
+/* おたすけ らいと君 生成エンジン
+   辞書（RAITO_DICT）×テンプレートで、タイトル・説明文・ハッシュタグ・価格の目安を決定的に組み立てる。
+   AIは使わない。同じ入力からは必ず同じ結果が出る。
+   使い方: RAITO.generate(input, dict[, bench]) -> {platform,title,titleLen,titleMin,titleMax,description,hashtags,price,warnings,fields} */
+var RAITO = (function(){
+  'use strict';
+
+  var MEASURE_KEYS = ['肩幅','身幅','袖丈','着丈','ウエスト','股上','股下','わたり幅','裾幅','総丈','ヒップ','縦','横','マチ','全長'];
+  var SIZE_ORDER = ['XXS','XS','S','M','L','XL','XXL','3XL','4XL'];
+  var SIZE_ALIAS = {'SS':'XS','LL':'XL','2L':'XL','3L':'XXL','2XL':'XXL','4L':'3XL','5L':'4XL','O':'XL','XO':'XXL'};
+  var GENDER_WORDS = ['レディース','メンズ','ユニセックス','キッズ'];
+  var NO_BRAND = ['ノーブランド','のーぶらんど','nobrand','なし','不明'];
+  var DEFAULT_TEMPLATES = {
+    mercari:{order:['badge','brand','item','color','size','highValue','model','brandKeywords','categoryKeywords','material','colorAlt','gender'],min:38,max:39},
+    yahoo:{order:['badge','brand','item','model','color','size','material','features','keywords'],min:98,max:99}
+  };
+  var BENCH_NOTE = '同じジャンルで実際に売れた例。この商品自体の実売ではありません';
+  var BENCH_CATS = [
+    ['財布',/財布|ウォレット|コインケース|カードケース/],
+    ['バッグ',/バッグ|バック|トート|ショルダー|リュック|ポーチ|クラッチ|鞄|カバン/],
+    ['靴',/靴|パンプス|スニーカー|ブーツ|サンダル|ローファー|シューズ|スリッポン/],
+    ['ネクタイ',/ネクタイ/],['ストール',/ストール|マフラー|ショール|スカーフ/],
+    ['アクセサリー',/ピアス|イヤリング|ネックレス|ブレスレット|指輪|リング|バングル|ブローチ/],
+    ['ダウン',/ダウン/],['コート',/コート/],['ジャケット',/ジャケット|ブルゾン|アウター|パーカー|カーディガン/],
+    ['ニット',/ニット|セーター/],['ワンピース',/ワンピース/],['シャツ',/シャツ|ブラウス|カットソー/],
+    ['スカート',/スカート/],['パンツ',/パンツ|デニム|ジーンズ|スラックス|ズボン/],['スーツ',/スーツ|セットアップ/]
+  ];
+  // 定価に対する中古の目安（一般的な幅。必ず実際の売り切れ相場で確認する前提）
+  var REF_RATIO = {'新品未使用':[0.5,0.7],'未使用に近い':[0.4,0.6],'目立った傷や汚れなし':[0.3,0.5],'やや傷や汚れあり':[0.2,0.35],'傷や汚れあり':[0.1,0.25],'全体的に状態が悪い':[0.05,0.15]};
+
+  /* ---------- 小さな道具 ---------- */
+  function len(s){ return Array.from(String(s||'')).length; }
+  function str(v){ return v==null ? '' : String(v).trim(); }
+  function norm(s){ return str(s).normalize('NFKC').toLowerCase().replace(/[\s　・]/g,''); }
+  function has(hay, needle){ var n=norm(needle); return !!n && norm(hay).indexOf(n)>=0; }
+  function arr(v){ if(Array.isArray(v)) return v; if(v==null||v==='') return []; return String(v).split(/[|｜]/); }
+  function uniq(a){ var seen={}, out=[]; a.forEach(function(x){ x=str(x); var k=norm(x); if(x && !seen[k]){ seen[k]=1; out.push(x); } }); return out; }
+  function yen(n){ n=Math.round(n); return (n<0?'-':'')+'¥'+Math.abs(n).toLocaleString('ja-JP'); }
+  function toNum(v){ var n=Number(String(v==null?'':v).normalize('NFKC').replace(/[^\d.]/g,'')); return isFinite(n)&&n>0 ? n : 0; }
+  function tokens(s){ return str(s).normalize('NFKC').split(/[\s、,，。\/／]+/).map(str).filter(Boolean); }
+
+  function bad(word, dict){
+    var list=(dict.forbidden||[]).concat(dict.fillerWords||[]);
+    for(var i=0;i<list.length;i++){ if(list[i] && has(word, list[i])) return list[i]; }
+    return '';
+  }
+
+  // 入力由来の語に禁止語・空語が混ざっていたら、その語だけ取り除く
+  function strip(text, dict){
+    var t=str(text);
+    (dict.forbidden||[]).concat(dict.fillerWords||[]).forEach(function(w){ if(w) t=t.split(w).join(' '); });
+    return t.replace(/\s+/g,' ').trim();
+  }
+
+  /* ---------- 辞書引き ---------- */
+  function findBrand(raw, dict){
+    var n=norm(raw); if(!n) return null;
+    var list=dict.brands||[], hit=null;
+    list.forEach(function(b){
+      [b.brand_name,b.brand_name_jp,b.brand_name_en,b.reading].forEach(function(v){ if(!hit && v && norm(v)===n) hit=b; });
+    });
+    if(hit) return hit;
+    list.forEach(function(b){
+      [b.brand_name,b.brand_name_jp,b.brand_name_en].forEach(function(v){ if(!hit && v && norm(v).length>=2 && (n.indexOf(norm(v))>=0)) hit=b; });
+    });
+    return hit;
+  }
+  function detectCategory(input, dict){
+    var texts=[str(input.item), str(input.model), str(input.features)];
+    var best=null, bestLen=0, bestPri=99;
+    (dict.categories||[]).forEach(function(c){
+      var names=[c.subcategory].concat(arr(c.aliases));
+      names.forEach(function(nm){
+        if(!nm) return;
+        for(var p=0;p<texts.length;p++){
+          if(has(texts[p], nm)){
+            var L=len(nm);
+            if(p<bestPri || (p===bestPri && L>bestLen)){ best=c; bestLen=L; bestPri=p; }
+            break;
+          }
+        }
+      });
+    });
+    return best;
+  }
+  function findColor(raw, dict){
+    var n=norm(raw); if(!n) return null;
+    var list=dict.colors||[], hit=null;
+    list.forEach(function(c){ [c.input_color,c.display_jp,c.display_common,c.display_en].forEach(function(v){ if(!hit && v && norm(v)===n) hit=c; }); });
+    if(hit) return hit;
+    list.forEach(function(c){ [c.display_common,c.display_jp].forEach(function(v){ if(!hit && v && norm(v).length>=2 && n.indexOf(norm(v))>=0) hit=c; }); });
+    return hit;
+  }
+  function findMaterial(raw, dict){
+    var n=norm(raw); if(!n) return null; var hit=null;
+    (dict.materials||[]).forEach(function(m){ [m.material,m.english].forEach(function(v){ if(!hit && v && n.indexOf(norm(v))>=0) hit=m; }); });
+    return hit;
+  }
+  function findCondition(raw, dict){
+    var n=norm(raw), list=dict.conditions||[], hit=null;
+    list.forEach(function(c){ if(!hit && norm(c.condition)===n) hit=c; });
+    if(!hit && n){ list.forEach(function(c){ if(!hit && norm(c.condition).replace(/[、,]/g,'')===n.replace(/[、,]/g,'')) hit=c; }); }
+    return hit || {condition:str(raw)||'目立った傷や汚れなし', badge:'', acceptable_expression:'', avoid_expression:''};
+  }
+  function sameCond(a,b){ return norm(a).replace(/[、,]/g,'')===norm(b).replace(/[、,]/g,''); }
+  function isNew(cond){ return /新品/.test(cond.condition||''); }
+  function sizeRank(label){
+    var s=str(label).normalize('NFKC').toUpperCase().replace(/\s/g,'').replace(/サイズ/g,'');
+    if(SIZE_ALIAS[s]) s=SIZE_ALIAS[s];
+    return SIZE_ORDER.indexOf(s);
+  }
+
+  /* 高値ワード：根拠（入力）があるものだけ。極美品・美品は状態バッジとして別扱い */
+  function highValueWords(input, dict, userText, cond){
+    var out=[];
+    var hv=(dict.highValue||[]).slice().sort(function(a,b){ return (Number(b.priority)||0)-(Number(a.priority)||0); });
+    hv.forEach(function(h){
+      var kw=str(h.keyword); if(!kw || kw==='極美品' || kw==='美品') return;
+      var r=h.rule||{}, vals=arr(r.value).map(str).filter(Boolean), ok=false;
+      if(r.type==='condition'){ ok=vals.some(function(v){ return sameCond(v, cond.condition); }) && has(userText, kw.replace(/付き$/,'')); }
+      else if(r.type==='size_max'){ var me2=sizeRank(input.sizeLabel), mx=sizeRank(vals[0]); ok= me2>=0 && mx>=0 && me2<=mx; }
+      else if(r.type==='material'){ ok=vals.some(function(v){ return has(input.material,v)||has(input.features,v)||has(input.item,v); }); }
+      else if(r.type==='size_min'){ var me=sizeRank(input.sizeLabel), min=sizeRank(vals[0]); ok= me>=0 && min>=0 && me>=min; }
+      else if(r.type==='country'){ ok=vals.some(function(v){ return has(userText, v+'製'); }); }
+      else if(r.type==='user_confirmed'){ ok=has(userText, kw); }
+      if(ok && !bad(kw, dict)) out.push(kw);
+    });
+    return out;
+  }
+
+  function badgeOf(cond, input, dict){
+    var b=str(cond.badge);
+    var g=(dict.highValue||[]).filter(function(h){ return str(h.keyword)==='極美品'; })[0];
+    if(g){
+      var need=(g.rule&&g.rule.type==='condition') ? arr(g.rule.value) : ['未使用に近い'];
+      if(need.some(function(v){ return sameCond(v, cond.condition); }) && !str(input.damage)) b='極美品';
+    }
+    return b;
+  }
+
+  function sizeText(input, cat){
+    var s=str(input.sizeLabel); if(!s) return '';
+    if(cat && /シューズ|靴|スニーカー|パンプス|ブーツ|サンダル/.test(cat.category+' '+cat.subcategory) && /^\d+(\.\d+)?$/.test(s.normalize('NFKC'))) s=s+'cm';
+    return s;
+  }
+
+  /* ---------- タイトル組み立て ---------- */
+  // parts: [{t:text, keep:bool}]（keep=削らない必須語）／cands: 埋め候補（優先順）
+  function assemble(parts, cands, min, max, dict, brandAlt){
+    var used=[];
+    function text(){ return used.map(function(p,i){ return p.t+(i<used.length-1 && !p.glue ? ' ' : ''); }).join(''); }
+    // すでに入っている語と重複するか（1〜2字の語は完全一致だけ見る：M・L が UNIQLO に吸われないように）
+    function contains(w){
+      var n=norm(w);
+      return used.some(function(p){ return str(p.t).split(/\s+/).some(function(tk){ var k=norm(tk); return k===n || (len(n)>=3 && k.indexOf(n)>=0); }); });
+    }
+    parts.forEach(function(p){ p.t=strip(p.t,dict); if(p.t && !contains(p.t)) used.push(p); });
+    // 長すぎる：ブランドを和名だけに→末尾の任意語から削る→アイテム名を詰める
+    if(len(text())>max && brandAlt){ used.forEach(function(p){ if(p.brand) p.t=brandAlt; }); }
+    for(var i=used.length-1; i>=0 && len(text())>max; i--){ if(!used[i].keep) used.splice(i,1); }
+    if(len(text())>max){
+      var it=used.filter(function(p){return p.item;})[0];
+      if(it){ var over=len(text())-max; it.t=Array.from(it.t).slice(0, Math.max(1, len(it.t)-over)).join(''); }
+    }
+    // 埋める：優先順に試し、ちょうど min〜max に収まる組み合わせを探す（優先度の高い語を先に採用）
+    var pool=[];
+    cands.forEach(function(w){ w=str(w); if(w && !bad(w,dict) && !contains(w) && pool.every(function(x){ return norm(x)!==norm(w); })) pool.push(w); });
+    var baseLen=len(text()), best=[], bestLen=baseLen, budget=20000;
+    if(baseLen<min){
+      (function dfs(i, cur, chosen){
+        if(--budget<0 || bestLen>=min) return;
+        if(cur>bestLen){ bestLen=cur; best=chosen.slice(); }
+        if(cur>=min) return;
+        for(var j=i;j<pool.length;j++){
+          var add=len(pool[j])+(cur>0?1:0);
+          if(cur+add<=max){ chosen.push(pool[j]); dfs(j+1, cur+add, chosen); chosen.pop(); if(bestLen>=min||budget<0) return; }
+        }
+      })(0, baseLen, []);
+      best.forEach(function(w){ used.push({t:w}); });
+    }
+    return text();
+  }
+
+  /* ---------- 価格 ---------- */
+  function benchCat(text){ for(var i=0;i<BENCH_CATS.length;i++){ if(BENCH_CATS[i][1].test(text)) return BENCH_CATS[i][0]; } return ''; }
+  function buildPrice(input, brand, cat, cond, bench){
+    var noBrand = !brand;
+    var fast = brand && /ファスト|ノーブランド/.test(str(brand.category));
+    var lux = brand && (brand.luxury_flag===true || /^true$/i.test(str(brand.luxury_flag)));
+    var profile = lux ? 'brand' : ((noBrand||fast) ? 'nonbrand' : 'general');
+    var labels={brand:'ブランド品の売れた例', nonbrand:'ノーブランド・ファストファッションの売れた例', general:'一般ブランドの売れた例'};
+    var key = benchCat([input.item, cat?cat.subcategory:'', cat?cat.category:''].join(' '));
+    var out={profile:profile, profileLabel:labels[profile], category:key, n:0, examples:[], note:BENCH_NOTE, refGuide:null, profit:null, fallback:false};
+    if(bench && key){
+      var src=bench[profile]&&bench[profile][key];
+      if(!src){ ['general','brand','nonbrand'].some(function(p){ if(bench[p]&&bench[p][key]){ src=bench[p][key]; out.profile=p; out.profileLabel=labels[p]; out.fallback=true; return true; } return false; }); }
+      if(src){ out.n=src.n; out.examples=src.ex.map(function(e){ return {price:e[0], title:e[1]}; }); }
+    }
+    var ref=toNum(input.refPrice), r=null;
+    Object.keys(REF_RATIO).forEach(function(k){ if(sameCond(k, cond.condition)) r=REF_RATIO[k]; });
+    if(ref && r){ out.refGuide={refPrice:ref, low:Math.round(ref*r[0]/100)*100, high:Math.round(ref*r[1]/100)*100, text:'参考価格 '+yen(ref)+' × 状態「'+cond.condition+'」の一般的な目安：'+yen(Math.round(ref*r[0]/100)*100)+'〜'+yen(Math.round(ref*r[1]/100)*100)+'（売り切れ相場で必ず確認）'}; }
+    var cost=toNum(input.cost);
+    if(cost && out.examples.length){
+      var mid=out.examples[Math.floor(out.examples.length/2)].price, fee=Math.round(mid*0.1);
+      out.profit={mid:mid, fee:fee, cost:cost, diff:mid-fee-cost, text:'中央の例 '+yen(mid)+' で売れた場合：手数料10% 約'+yen(fee)+'を引いて、仕入れ値との差は '+yen(mid-fee-cost)+'（送料は別）'};
+    }
+    return out;
+  }
+
+  /* ---------- 本体 ---------- */
+  function generate(input, dict, bench){
+    input=input||{}; dict=dict||{};
+    if(bench===undefined && typeof BENCH_EX!=='undefined') bench=BENCH_EX; // eslint-disable-line no-undef
+    var platform = input.platform==='yahoo' ? 'yahoo' : 'mercari';
+    var tpl = (dict.titleTemplates&&dict.titleTemplates[platform]) || DEFAULT_TEMPLATES[platform];
+    var min = Number(tpl.min)||DEFAULT_TEMPLATES[platform].min, max = Number(tpl.max)||DEFAULT_TEMPLATES[platform].max;
+    var order = (tpl.order&&tpl.order.length) ? tpl.order : DEFAULT_TEMPLATES[platform].order;
+    var warnings=[];
+
+    var brandRaw=str(input.brand), isNoBrand=NO_BRAND.indexOf(norm(brandRaw))>=0;
+    var brand = isNoBrand ? null : findBrand(brandRaw, dict);
+    var cat = detectCategory(input, dict);
+    var color = findColor(input.color, dict);
+    var mat = findMaterial(input.material, dict);
+    var cond = findCondition(input.condition, dict);
+    var badge = badgeOf(cond, input, dict);
+    var picks=(Array.isArray(input.picks)?input.picks:[]).map(str).filter(Boolean);
+    var purchased=str(input.purchasedFrom)||str(input.purchasedAt);
+    var userText=[input.item,input.model,input.features,input.damage,input.material,input.accessories,purchased].concat(picks).map(str).join(' ');
+    var kwText=[input.features,input.model,input.item,input.damage].concat(picks).map(str).join(' ');
+
+    // ブランド表示
+    var bJp='', bEn='', bDisp='';
+    if(brand){ bJp=str(brand.brand_name_jp)||str(brand.brand_name); bEn=str(brand.brand_name_en)||str(brand.brand_name); }
+    else if(brandRaw && !isNoBrand){ bJp=brandRaw; }
+    bDisp = (bJp && bEn && norm(bJp)!==norm(bEn)) ? bJp+' '+bEn : (bJp||bEn);
+
+    // 色
+    var cCommon='', cJp='', cEn='';
+    if(color){ cCommon=str(color.display_common)||str(color.display_jp); cJp=str(color.display_jp); cEn=str(color.display_en); }
+    else if(str(input.color)){ cCommon=str(input.color); }
+    var colorAll=uniq([cCommon,cJp,cEn]).join(' ');
+
+    var size=sizeText(input, cat);
+    var hv=highValueWords(input, dict, userText, cond);
+    var brandName = brand ? str(brand.brand_name) : '';
+    var bkw=(dict.brandKeywords||[]).filter(function(k){ return brandName && norm(k.brand)===norm(brandName) && has(kwText,k.keyword); })
+      .sort(function(a,b){ return (Number(b.priority)||0)-(Number(a.priority)||0); }).map(function(k){ return str(k.keyword); });
+    if(brand){ arr(brand.search_keywords).forEach(function(k){ k=str(k); if(k && has(kwText,k)) bkw.push(k); }); }
+    bkw=uniq(bkw);
+    if(!cat && brandName){
+      // 種類名が辞書に無い（例：エアマックス90）ときは、入力に含まれるブランド別キーワードのカテゴリから判定
+      (dict.brandKeywords||[]).forEach(function(k){
+        if(cat || norm(k.brand)!==norm(brandName) || !has(kwText,k.keyword)) return;
+        (dict.categories||[]).forEach(function(c){ if(!cat && (norm(c.subcategory)===norm(k.category))) cat=c; });
+        (dict.categories||[]).forEach(function(c){ if(!cat && (norm(c.category)===norm(k.category))) cat=c; });
+      });
+      if(cat) size=sizeText(input, cat);
+    }
+    // カテゴリ推奨語は「この商品に当てはまる」と入力（特徴欄・候補の選択）で確認できたものだけ使う
+    var recAll = cat ? arr(cat.recommended_keywords).map(str).filter(function(w){ return w && !bad(w,dict); }) : [];
+    var rec = recAll.filter(function(w){ return has(kwText,w); });
+    var gender=GENDER_WORDS.filter(function(g){ return has(userText,g); });
+    var matName = mat ? str(mat.material) : str(input.material);
+
+    // ---- タイトル ----
+    var title, colorAlt=(cJp&&norm(cJp)!==norm(cCommon))?[cJp]:[];
+    // 中立の埋め語（優先順）：ブランドの読み／親カテゴリ名／カラー英字／素材英字／性別語／USED（新品以外）／季節語（秋冬・春夏）／ノーブランド（入力時）
+    var season = mat && /^(秋冬|春夏)$/.test(str(mat.season)) ? str(mat.season) : '';
+    var neutral=[brand?str(brand.reading):'', cat?cat.category:'', cEn, mat?str(mat.english):''].concat(gender, [isNew(cond)?'':'USED', season, isNoBrand?'ノーブランド':'']);   // ノーブランドと入力された時だけ
+    var measureWords=[];
+    if(cat){ arr(cat.size_fields).forEach(function(f){ var v=str((input.measures||{})[f]); if(v && f!=='表記サイズ') measureWords.push(f+v.replace(/\s*cm$/i,'')+'cm'); }); }
+    if(platform==='mercari'){
+      // 先頭6つ（状態〜高値ワード）が土台、それ以降の order が埋め候補の優先順
+      var slot={
+        badge:[{t:badge?'【'+badge+'】':'', keep:true, glue:true}], brand:[{t:bDisp, keep:true, brand:true}], item:[{t:str(input.item), keep:true, item:true}],
+        color:[{t:cCommon, keep:true}], size:[{t:size, keep:true}], highValue:hv.map(function(w){return {t:w};})
+      };
+      var fill={ model:[str(input.model)], brandKeywords:bkw, categoryKeywords:rec, material:[matName], colorAlt:colorAlt, gender:gender };
+      var parts=[], cands=[];
+      var fillOrder=order.filter(function(k){ return fill[k]; });
+      ['model','brandKeywords','categoryKeywords','material','colorAlt','gender'].forEach(function(k){ if(fillOrder.indexOf(k)<0) fillOrder.push(k); });
+      order.forEach(function(k){ if(slot[k]) slot[k].forEach(function(p){ parts.push(p); }); });
+      fillOrder.forEach(function(k){ cands=cands.concat(fill[k]); });
+      cands=cands.concat(neutral);   // 最後は嘘にならない中立の語だけ
+      var clone=function(){ return parts.map(function(p){ return Object.assign({}, p); }); };
+      title=assemble(clone(), cands, min, max, dict, bJp);
+      // ブランド別キーワード（例：ノバチェック）が和英併記で入らないときは、和名だけにして入れる
+      if(bkw.length && bJp && bDisp!==bJp){
+        var miss=function(t){ return bkw.filter(function(k){ return !has(t,k); }).length; };
+        var p2=clone(); p2.forEach(function(p){ if(p.brand) p.t=bJp; });
+        var t2=assemble(p2, cands, min, max, dict, bJp);
+        if(miss(t2)<miss(title)) title=t2;
+      }
+    } else {
+      var feat=tokens(input.features).concat(picks).filter(function(w){ return !bad(w,dict); });
+      var yslot={
+        badge:[{t:badge?'【'+badge+'】':'', keep:true, glue:true}], brand:[{t:bDisp, keep:true, brand:true}], item:[{t:str(input.item), keep:true, item:true}],
+        model:[{t:str(input.model)}], color:[{t:colorAll, keep:true}], size:[{t:size, keep:true}],
+        material:[{t:uniq([matName, mat?str(mat.english):'']).join(' ')}],
+        features:feat.concat(hv).map(function(w){return {t:w};}), keywords:bkw.concat(rec).map(function(w){return {t:w};})
+      };
+      var yparts=[]; order.forEach(function(k){ (yslot[k]||[]).forEach(function(p){ yparts.push(p); }); });
+      var ycands=(cat?[cat.subcategory]:[]).concat(neutral, measureWords, [cond.condition.replace(/[、,]/g,''), isNew(cond)?'':'中古', '送料無料']);
+      title=assemble(yparts, ycands, min, max, dict, bJp);
+    }
+    var titleLen=len(title);
+
+    // ---- 不足の案内 ----
+    if(!brandRaw) warnings.push('ブランド名を入れると、ブランド名で探す人に見つけてもらいやすくなります（ブランドが無いときは「ノーブランド」でOKです）');
+    else if(!brand && !isNoBrand) warnings.push('「'+brandRaw+'」は辞書にないブランドです。入力どおりの表記でタイトルに入れています。和名と英字の両方を入れると検索に強くなります');
+    if(!cat) warnings.push('アイテムの種類を判定できませんでした。「ショルダーバッグ」「Tシャツ」のように種類名を入れると、検索キーワードと採寸欄が出ます');
+    if(!str(input.color)) warnings.push('色を入れると、タイトルに「ブラック 黒」のように色名が入り、色で探す人に見つかりやすくなります');
+    var isBagLike = cat && /バッグ|財布|小物/.test(cat.category);
+    if(!str(input.sizeLabel) && !isBagLike) warnings.push('表記サイズ（M・38・27cm など）を入れると、タイトルにサイズが入ります');
+    if(!str(input.material)) warnings.push('素材（タグの表記）を入れると、素材名と素材の特長が説明文に入ります');
+    var sizeFields = cat ? arr(cat.size_fields).map(str).filter(function(f){ return f && f!=='表記サイズ'; }) : [];
+    var measures=input.measures||{};
+    var missingM=sizeFields.filter(function(f){ return !str(measures[f]); });
+    if(sizeFields.length && missingM.length) warnings.push('採寸（'+missingM.join('・')+'）を入れると、説明文の「（記入してください）」が埋まります');
+    var unpicked=recAll.filter(function(w){ return rec.indexOf(w)<0; });
+    if(titleLen<min && platform==='yahoo'){
+      warnings.push('タイトルが'+titleLen+'字です（目標'+min+'〜'+max+'字）。型番・素材・特徴を足すと検索に強くなります');
+    } else if(titleLen<min){
+      warnings.push('タイトルが'+titleLen+'字です（目標'+min+'〜'+max+'字）。意味のない言葉では埋めていません。'
+        +(unpicked.length ? 'この商品に当てはまる特徴（'+unpicked.slice(0,5).join('／')+' など）があれば選ぶか「その他の特徴」に入れると、タイトルに入ります' : '色・素材・型番・サイズ・特徴を足すと埋まります'));
+    }
+    (dict.forbidden||[]).forEach(function(w){ if(w && has(userText,w)) warnings.push('「'+w+'」は根拠がある場合のみ使えます（タイトルには入れていません。説明文に残す場合は根拠を書き添えてください）'); });
+
+    // ---- 説明文 ----
+    var L=[];
+    L.push('■ブランド'); L.push(bDisp || (isNoBrand?'ノーブランド':'（記入してください）')); L.push('');
+    L.push('■アイテム'); L.push(uniq([str(input.item), cat?cat.subcategory:'']).join(' ')||'（記入してください）');
+    var kwLine=uniq([bDisp].concat(bkw, rec, cat?[cat.subcategory, cat.category]:[])).join(' ');
+    if(kwLine) L.push('検索キーワード：'+kwLine);
+    L.push('');
+    L.push('■商品情報');
+    if(str(input.model)) L.push('型番：'+str(input.model));
+    if(toNum(input.refPrice)) L.push('参考価格：'+yen(toNum(input.refPrice)));
+    L.push('カラー：'+(colorAll||'（記入してください）'));
+    if(mat) L.push('素材：'+str(mat.material)+(str(mat.english)&&norm(mat.english)!==norm(mat.material)?'（'+str(mat.english)+'）':'')+(str(mat.feature)?'　'+str(mat.feature):''));
+    else L.push('素材：'+(str(input.material)||'（記入してください）'));
+    L.push('');
+    L.push('■サイズ'); if(size||!isBagLike) L.push('表記サイズ：'+(size||'（記入してください）'));
+    sizeFields.forEach(function(f){ var v=str(measures[f]); L.push(f+'：'+(v ? '約'+v.replace(/\s*cm$/i,'')+'cm' : '（記入してください）')); });
+    if(sizeFields.length) L.push('※平置きでの採寸のため、多少の誤差はご容赦ください');
+    L.push('');
+    L.push('■状態'); L.push(cond.condition);
+    if(str(cond.acceptable_expression)) L.push(str(cond.acceptable_expression));
+    if(str(input.damage)) L.push('気になる点：'+str(input.damage));
+    L.push(isNew(cond) ? 'お写真もあわせてご確認ください。' : '気になる点はお写真もあわせてご確認ください。追加のお写真が必要でしたらお気軽にお声がけください。');
+    if(str(input.accessories)||purchased){
+      L.push(''); L.push('■付属品・購入先');
+      if(str(input.accessories)) L.push('付属品：'+str(input.accessories));
+      if(purchased) L.push('購入先：'+purchased);
+    } else warnings.push('付属品（保存袋・箱・タグなど）や購入先があれば入れると、安心して選んでもらえます');
+    var featLine=uniq([str(input.features)].concat(picks.filter(function(w){ return !has(input.features,w); }))).join(' ');
+    if(featLine){ L.push(''); L.push('■その他の特徴'); L.push(featLine); }
+    var coords=(dict.coords||[]).filter(function(c){ return cat && (norm(c.item_category)===norm(cat.subcategory) || norm(c.item_category)===norm(cat.category)); });
+    var cc=coords.filter(function(c){ return cCommon && norm(c.color)===norm(cCommon); });
+    var useCo=(cc.length?cc:coords).slice(0,2);
+    if(useCo.length){ L.push(''); L.push('■おすすめコーデ'); useCo.forEach(function(c){ L.push('・'+str(c.coordinate)+(str(c.style)?'（'+str(c.style)+'）':'')); }); }
+    L.push('');
+    L.push('■発送・その他');
+    if(platform==='mercari'){
+      L.push('・送料無料／即購入OK');
+      L.push('・ご購入後1〜2日以内に、丁寧に梱包して発送します');
+    } else {
+      L.push('・送料無料（落札者様のご負担はありません）');
+      L.push('・ご入金確認後1〜2日以内に、丁寧に梱包して発送します');
+    }
+    if(!isNew(cond)) L.push('・自宅保管のUSED品です。ご理解いただける方のご'+(platform==='mercari'?'購入':'入札')+'をお願いいたします');
+    if(platform==='yahoo'){
+      L.push(''); L.push('■落札後の流れ');
+      L.push('1. 落札後、Yahoo!かんたん決済でお支払いください');
+      L.push('2. 取引ナビでお届け先をご確認ください');
+      L.push('3. ご入金確認後、1〜2日以内に発送いたします');
+      L.push(''); L.push('■注意事項');
+      L.push('・お使いの画面により、実物と色味が異なって見える場合がございます');
+      L.push('・ご質問は入札前に質問欄からお願いいたします');
+      if(!isNew(cond)) L.push('・中古品のため、状態にご理解のある方のご入札をお願いいたします');
+    } else {
+      L.push('・お使いの画面により、実物と色味が異なって見える場合がございます');
+      L.push('・ご不明な点はお気軽にコメントください');
+    }
+    var description=L.join('\n');
+
+    // ---- ハッシュタグ（8〜10個） ----
+    var tagSrc=[bJp, bEn, str(input.item), cat?cat.subcategory:'', cat?cat.category:'', cCommon, matName, badge].concat(bkw, gender, rec,
+      ['送料無料', platform==='mercari'?'即購入OK':'ヤフオク', '丁寧梱包', cond.condition, isNew(cond)?'新品':'USED', isNew(cond)?'未使用':'中古']);
+    var hashtags=[];
+    uniq(tagSrc).forEach(function(t){
+      var tag='#'+t.normalize('NFKC').replace(/[\s#＃・,，、。()（）\[\]【】!?！？]/g,'');
+      if(tag.length>1 && hashtags.length<10 && !bad(t,dict) && hashtags.indexOf(tag)<0) hashtags.push(tag);
+    });
+
+    return {
+      platform:platform, title:title, titleLen:titleLen, titleMin:min, titleMax:max,
+      description:description, hashtags:hashtags,
+      price:buildPrice(input, brand, cat, cond, bench),
+      warnings:uniq(warnings),
+      fields:{
+        brand:brand, brandDisplay:bDisp, category:cat, sizeFields:sizeFields,
+        color:color, colorDisplay:colorAll, material:mat, condition:cond.condition, badge:badge, highValue:hv, brandKeywords:bkw
+      }
+    };
+  }
+
+  /* 画面用：この商品に当てはまるか選んでもらう候補（カテゴリ推奨語・ブランド別キーワード） */
+  function chips(input, dict){
+    var brand=findBrand(input.brand, dict), cat=detectCategory(input, dict), out=[];
+    if(cat) arr(cat.recommended_keywords).forEach(function(w){ out.push(str(w)); });
+    if(brand) (dict.brandKeywords||[]).forEach(function(k){ if(norm(k.brand)===norm(brand.brand_name)) out.push(str(k.keyword)); });
+    return uniq(out).filter(function(w){ return w && !bad(w,dict) && !has(input.item,w); });
+  }
+
+  return {generate:generate, chips:chips, detectCategory:detectCategory, findBrand:findBrand, len:len, MEASURE_KEYS:MEASURE_KEYS, BENCH_NOTE:BENCH_NOTE};
+})();
+if(typeof module!=='undefined') module.exports=RAITO;
+
+</script>
+<script>
+/* app.js */
+/* おたすけ らいと君 画面（入力 → RAITO.generate → 表示・コピー・JSON書き出し・任意のAI補助） */
+(function(){
+  'use strict';
+  var DICT = (typeof RAITO_DICT !== 'undefined') ? RAITO_DICT : null;           // eslint-disable-line no-undef
+  var BENCH = (typeof BENCH_EX !== 'undefined') ? BENCH_EX : null;              // eslint-disable-line no-undef
+  var $ = function(id){ return document.getElementById(id); };
+  var platform = 'mercari', last = null, lastInput = null, sample = null, origDesc = null;
+  var FIELDS = ['brand','item','model','refPrice','color','material','sizeLabel','condition','damage','accessories','purchasedFrom','features','cost'];
+  var CONDITIONS_FALLBACK = ['新品未使用','未使用に近い','目立った傷や汚れなし','やや傷や汚れあり','傷や汚れあり'];
+
+  /* 相棒のドット絵 */
+  (function(){
+    var PAL={A:'#8a7690',B:'#fce6ee',K:'#574a58',C:'#f5b8cf',W:'#c66f96'};
+    var CHILD=['..AA........AA..','.ABBA......ABBA.','.ABBBAAAAAABBBA.','.ABBBBBBBBBBBBA.','ABBBBBBBBBBBBBBA','ABBKKBBBBBBKKBBA','ABBKKBBBBBBKKBBA','ABCCBBBBBBBBCCBA','ABBBBBBWWBBBBBBA','ABBBBBBBBBBBBBBA','.ABBBBBBBBBBBBA.','.ABBBBBBBBBBBBA.','..ABBBBBBBBBBA..','..ABBAAAAAABBA..','..AAA......AAA..','................'];
+    var s='<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+    CHILD.forEach(function(r,y){ for(var x=0;x<16;x++){ var c=PAL[r[x]]; if(c) s+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+c+'"/>'; } });
+    $('buddy').innerHTML=s+'</svg>';
+  })();
+
+  if(!DICT || typeof RAITO === 'undefined'){
+    $('err').textContent='辞書が読み込めませんでした。少し待ってから、ページを読み込み直してください。';
+    $('err').hidden=false; $('go').disabled=true; return;
+  }
+
+  /* 入力欄の準備：ラベル・例文は辞書の inputFields を優先 */
+  var KEY_ALIAS={purchasedAt:'purchasedFrom'};
+  (DICT.inputFields||[]).forEach(function(f){
+    if(f.type==='measure') return;
+    var el=$('f-'+(KEY_ALIAS[f.key]||f.key)); if(!el) return;
+    if(f.placeholder) el.placeholder=f.placeholder;
+    var lb=document.querySelector('label[for="f-'+(KEY_ALIAS[f.key]||f.key)+'"]');
+    if(lb && f.label){ var em=lb.querySelector('em'); lb.textContent=f.label; if(em) lb.appendChild(em); }
+  });
+  if(!$('f-brand').placeholder) $('f-brand').placeholder='例）COACH／ユニクロ／ノーブランド';
+  if(!$('f-item').placeholder) $('f-item').placeholder='例）ショルダーバッグ／Tシャツ';
+  function fillList(id, values){ var dl=$(id); values.forEach(function(v){ if(!v) return; var o=document.createElement('option'); o.value=v; dl.appendChild(o); }); }
+  fillList('dl-brand', (DICT.brands||[]).map(function(b){ return b.brand_name_jp||b.brand_name; }).concat(['ノーブランド']));
+  fillList('dl-color', (DICT.colors||[]).map(function(c){ return c.display_common; }));
+  fillList('dl-material', (DICT.materials||[]).map(function(m){ return m.material; }));
+  var conds=(DICT.conditions&&DICT.conditions.length) ? DICT.conditions.map(function(c){ return c.condition; }) : CONDITIONS_FALLBACK;
+  conds.forEach(function(c){ var o=document.createElement('option'); o.value=c; o.textContent=c; $('f-condition').appendChild(o); });
+  $('f-condition').value = conds.indexOf('目立った傷や汚れなし')>=0 ? '目立った傷や汚れなし' : conds[0];
+
+  /* 採寸欄：アイテムの種類を判定して、その size_fields だけ出す */
+  var measVals={}, MEAS_PH={};
+  (DICT.inputFields||[]).concat(DICT.extraMeasureFields||[]).forEach(function(f){ if(f.type==='measure' && f.label) MEAS_PH[f.label]=f.placeholder||'cm'; });
+  function renderMeasures(){
+    var cat=RAITO.detectCategory({item:$('f-item').value, model:$('f-model').value, features:$('f-features').value}, DICT);
+    var flds=cat ? [].concat(cat.size_fields||[]).filter(function(f){ return f && f!=='表記サイズ'; }) : [];
+    var grid=$('measGrid');
+    grid.querySelectorAll('input').forEach(function(i){ measVals[i.dataset.k]=i.value; });
+    grid.innerHTML='';
+    $('meas').hidden=!flds.length;
+    if(!flds.length) return;
+    $('measTitle').textContent='採寸（'+cat.subcategory+'・平置き・cm）';
+    flds.forEach(function(k){
+      var d=document.createElement('div'), id='m-'+k;
+      var lb=document.createElement('label'); lb.htmlFor=id; lb.textContent=k;
+      var inp=document.createElement('input'); inp.id=id; inp.dataset.k=k; inp.inputMode='decimal'; inp.placeholder=MEAS_PH[k]||'cm'; inp.value=measVals[k]||'';
+      d.appendChild(lb); d.appendChild(inp); grid.appendChild(d);
+    });
+  }
+  /* 当てはまる特徴の候補（辞書のカテゴリ推奨語・ブランド別キーワード）。選んだものだけタイトルに入る */
+  var picked={};
+  function renderChips(){
+    var list=RAITO.chips({brand:$('f-brand').value, item:$('f-item').value, model:$('f-model').value, features:$('f-features').value}, DICT);
+    var box=$('chips'); box.innerHTML=''; $('chipsWrap').hidden=!list.length;
+    list.forEach(function(w){
+      var b=el('button',null,w); b.type='button'; b.setAttribute('aria-pressed', picked[w]?'true':'false');
+      b.onclick=function(){ picked[w]=!picked[w]; b.setAttribute('aria-pressed', picked[w]?'true':'false'); };
+      box.appendChild(b);
+    });
+  }
+  ['f-item','f-model','f-features'].forEach(function(id){ $(id).addEventListener('input', renderMeasures); });
+  ['f-brand','f-item','f-model'].forEach(function(id){ $(id).addEventListener('input', renderChips); });
+
+  function collect(){
+    var inp={platform:platform, measures:{}};
+    FIELDS.forEach(function(k){ var el=$('f-'+k); if(el) inp[k]=(el.value||'').trim(); });
+    $('measGrid').querySelectorAll('input').forEach(function(i){ if(i.value.trim()) inp.measures[i.dataset.k]=i.value.trim(); });
+    inp.picks=[].slice.call($('chips').querySelectorAll('button[aria-pressed="true"]')).map(function(b){ return b.textContent; });
+    return inp;
+  }
+
+  /* 表示 */
+  function yen(n){ n=Math.round(Number(n)||0); return (n<0?'-':'')+'¥'+Math.abs(n).toLocaleString('ja-JP'); }
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function copyText(txt, btn){
+    var done=function(){ btn.textContent='コピーしました'; setTimeout(function(){ btn.textContent='コピー'; },1500); };
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, fallback); }
+      else fallback();
+    }catch(e){ fallback(); }
+    function fallback(){
+      try{ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); var ok=document.execCommand('copy'); document.body.removeChild(ta); if(ok) done(); else btn.textContent='長押しでコピー'; }
+      catch(e){ btn.textContent='長押しでコピー'; }
+    }
+  }
+  function copyBtn(getText, id){ var b=el('button','copy','コピー'); b.type='button'; if(id) b.id=id; b.onclick=function(){ copyText(getText(), b); }; return b; }
+  function head(r, title, tools){ var h=el('h3'); h.appendChild(document.createTextNode(title)); if(tools){ var t=el('span','tools'); tools.forEach(function(x){ t.appendChild(x); }); h.appendChild(t); } r.appendChild(h); }
+
+  function render(d){
+    last=d; origDesc=null;
+    var r=$('result'); r.innerHTML=''; r.hidden=false;
+    var ok = d.titleLen>=d.titleMin && d.titleLen<=d.titleMax;
+    var cnt=el('span','pill '+(ok?'ok':'lav'), d.titleLen+'字（目標 '+d.titleMin+'〜'+d.titleMax+'字）'); cnt.id='titleCount';
+    head(r, 'タイトル', [cnt, copyBtn(function(){ return last.title; }, 'copyTitle')]);
+    var t=el('div','box',d.title); t.id='outTitle'; r.appendChild(t);
+
+    var descTools=[copyBtn(function(){ return last.description; }, 'copyDesc')];
+    if(sample){ var ai=el('button','copy','説明文をなめらかに'); ai.type='button'; ai.id='aiSmooth'; ai.onclick=function(){ smooth(ai); }; descTools.unshift(ai); }
+    head(r, '説明文', descTools);
+    var ds=el('div','box',d.description); ds.id='outDesc'; r.appendChild(ds);
+    var aiNote=el('div','note'); aiNote.id='aiNote'; aiNote.hidden=true; r.appendChild(aiNote);
+
+    var tags=d.hashtags.join(' ');
+    head(r, 'ハッシュタグ（'+d.hashtags.length+'個）', [copyBtn(function(){ return last.hashtags.join(' '); })]);
+    r.appendChild(el('div','box',tags));
+
+    var p=d.price||{};
+    head(r, '価格の目安');
+    var pb=el('div','box'); pb.style.whiteSpace='normal';
+    if(p.examples && p.examples.length){
+      pb.appendChild(el('div','cnt',p.profileLabel+'（'+p.category+'・'+p.n+'件から低・中・高の3例）'));
+      p.examples.forEach(function(e){ var row=el('div','ex'); row.appendChild(el('b',null,yen(e.price))); row.appendChild(el('span',null,e.title)); pb.appendChild(row); });
+    } else {
+      pb.appendChild(el('div',null,'このジャンルの売れた例はまだ登録がありません。メルカリで「売り切れ」に絞って、同じ商品の価格を確かめてください。'));
+    }
+    r.appendChild(pb);
+    r.appendChild(el('div','note strong', p.note || RAITO.BENCH_NOTE));
+    if(p.refGuide) r.appendChild(el('div','note', p.refGuide.text));
+    if(p.profit) r.appendChild(el('div','note', p.profit.text));
+
+    if(d.warnings.length){
+      head(r, 'あるともっと良くなるもの');
+      var ck=el('div'); d.warnings.forEach(function(w){ ck.appendChild(el('div','check','・'+w)); }); r.appendChild(ck);
+    }
+
+    var btns=el('div','btns');
+    var j1=el('button','cta ghost','JSONを保存'); j1.type='button'; j1.onclick=saveJson;
+    var j2=el('button','cta ghost','JSONをコピー'); j2.type='button'; j2.onclick=function(){ copyText(JSON.stringify(exportObj(),null,2), j2); setTimeout(function(){ j2.textContent='JSONをコピー'; },1600); };
+    btns.appendChild(j1); btns.appendChild(j2); r.appendChild(btns);
+
+    $('greet').textContent = ok
+      ? 'タイトルは'+d.titleLen+'字で、ちょうど良い長さです。説明文の「（記入してください）」があれば、埋めてから出品してくださいね。'
+      : 'タイトルが'+d.titleLen+'字です。下の「あるともっと良くなるもの」を足すと、検索に強いタイトルになります。';
+  }
+
+  function exportObj(){ return {input:lastInput, output:{platform:last.platform,title:last.title,titleLen:last.titleLen,description:last.description,hashtags:last.hashtags,price:last.price,warnings:last.warnings}}; }
+  function saveJson(){
+    var txt=JSON.stringify(exportObj(),null,2);
+    try{
+      var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));
+      a.download='raito_'+(last.platform)+'_'+Date.now()+'.json'; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    }catch(e){ $('err').textContent='保存できない環境です。「JSONをコピー」を使ってください。'; $('err').hidden=false; }
+  }
+
+  function run(){
+    var inp=collect();
+    if(!inp.item && !inp.brand){ $('err').textContent='アイテム名を入れてください。'; $('err').hidden=false; return; }
+    $('err').hidden=true;
+    lastInput=inp;
+    render(RAITO.generate(inp, DICT, BENCH));
+    $('go').textContent='入れ直して、もう一度つくる';
+  }
+  $('go').onclick=function(){ run(); $('result').scrollIntoView({behavior:'smooth', block:'start'}); };
+  document.querySelectorAll('#seg button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('#seg button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on'); platform=b.dataset.p;
+      if(last) run();
+    };
+  });
+
+  /* ---- 任意のAI補助：説明文の言い回しだけ整える（タイトルは渡さない） ---- */
+  var EMOJI=/\p{Extended_Pictographic}/u;
+  function headings(t){ return (t.match(/^■.*$/gm)||[]).join('\n'); }
+  function numbers(t){ return (t.normalize('NFKC').match(/\d+(?:[.,]\d+)*/g)||[]).sort().join(','); }
+  function smooth(btn){
+    var src=last.description;
+    var ng=(DICT.forbidden||[]).concat(DICT.fillerWords||[]);
+    var prompt='次の出品説明文の言い回しだけを、やさしく丁寧で読みやすい日本語に整えてください。\n'
+      +'守ること：\n- 構造（■で始まる見出しの文言・順番）を一字も変えない\n- 事実・数値・サイズ・価格・型番・状態の内容を変えない。足さない・削らない\n'
+      +'- 全体の字数をほぼ変えない（±15%以内）\n- 絵文字・顔文字・記号の飾りを使わない\n- 「（記入してください）」はそのまま残す\n'
+      +'- 次の語は使わない：'+ng.join('、')+'\n'
+      +'整えた説明文の本文だけを返してください（前置きや説明は書かない）。\n\n---\n'+src;
+    btn.disabled=true; btn.textContent='整えています…';
+    var note=$('aiNote');
+    sample(prompt, {modelTier:'quick'}).then(function(res){
+      var out=String(res&&res.text||'').trim();
+      var bad=ng.filter(function(w){ return w && out.indexOf(w)>=0 && src.indexOf(w)<0; });
+      var lenOk=Math.abs(out.length-src.length) <= src.length*0.2;
+      if(!out || res.truncated || headings(out)!==headings(src) || numbers(out)!==numbers(src) || EMOJI.test(out) || bad.length || !lenOk){
+        note.textContent='整えた結果が見出しや数値を変えてしまったので、元の説明文のままにしています。'; note.hidden=false; return;
+      }
+      origDesc=src; last.description=out; $('outDesc').textContent=out;
+      note.textContent='言い回しを整えました（見出し・数値は元のままです）。'; note.hidden=false;
+      var undo=el('button','copy','元に戻す'); undo.type='button'; undo.style.marginLeft='6px';
+      undo.onclick=function(){ last.description=origDesc; $('outDesc').textContent=origDesc; note.hidden=true; };
+      note.appendChild(undo);
+    }).catch(function(e){
+      var code=e&&e.code;
+      if(code==='not_granted'){ btn.hidden=true; return; }
+      note.textContent= code==='rate_limited' ? 'いま混み合っています。少し待ってからもう一度お願いします。' : '今回は整えられませんでした。元の説明文はそのまま使えます。';
+      note.hidden=false;
+    }).then(function(){ btn.disabled=false; btn.textContent='説明文をなめらかに'; });
+  }
+  (async function(){
+    try{ if(window.claude && typeof window.claude.use==='function'){ sample = await window.claude.use('sample'); } }catch(e){ sample=null; }
+    if(sample && last) render(last);
+  })();
+})();
+
+</script>
