@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">
+<title>おたすけ らいと君（お試し5回）</title>
+<style>
+:root{--bg:#f7eef2;--paper:#fff;--ink:#4f454e;--plum:#574a58;--sub:#7d6d79;--line:#f3e3ec;--pink:#f0a2c5;--pinkd:#c66f96;--lav:#C99BE8;--lavd:#9E77D6;--grad:linear-gradient(135deg,#F5A6C8,#B98BEA);--shadow:0 12px 28px -18px rgba(87,74,88,.35);--soft:#fff7fa;--app:linear-gradient(180deg,#fdf1f4 0%,#fbe9ee 55%,#f3f0f7 100%);--okbg:#e9f5ee;--okfg:#3f7a57}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241c26;--paper:#2f2632;--ink:#f1e8ee;--plum:#f3e9f0;--sub:#b9a9b5;--line:#443a48;--soft:#3a3040;--app:linear-gradient(180deg,#2a2130,#241c26);--shadow:0 12px 28px -18px rgba(0,0,0,.6);--okbg:#25382c;--okfg:#9fd6b2}}
+:root[data-theme="dark"]{--bg:#241c26;--paper:#2f2632;--ink:#f1e8ee;--plum:#f3e9f0;--sub:#b9a9b5;--line:#443a48;--soft:#3a3040;--app:linear-gradient(180deg,#2a2130,#241c26);--shadow:0 12px 28px -18px rgba(0,0,0,.6);--okbg:#25382c;--okfg:#9fd6b2}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg)}
+body{background:var(--app);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","YuGothic","游ゴシック","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;line-height:1.75;min-height:100vh;min-height:100dvh;overflow-x:hidden}
+.app{max-width:560px;margin:0 auto;padding-block:14px 110px;padding-inline:16px}
+.hud{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 14px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.hud img{height:22px;width:auto}.hud b{color:var(--plum);font-size:14px}.hud small{color:var(--sub);font-size:11px;display:block;font-weight:700}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow);margin-top:12px}
+.row{display:flex;gap:10px;align-items:center}.between{justify-content:space-between}
+.bubble{position:relative;flex:1;min-width:0;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:10px 12px;font-size:13.5px}
+.bubble:before{content:"";position:absolute;left:-7px;top:16px;width:12px;height:12px;background:var(--soft);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.buddy{width:56px;height:56px;flex:none}.buddy svg{width:100%;height:100%;display:block;shape-rendering:crispEdges}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{border:1.5px solid var(--line);background:var(--paper);color:var(--plum);border-radius:14px;padding:11px;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+.seg button.on{background:var(--grad);color:#fff;border-color:transparent}
+label{display:block;font-size:12px;font-weight:800;color:var(--plum);margin:10px 0 4px}
+label em{font-style:normal;font-weight:700;color:var(--sub);font-size:11px;margin-left:4px}
+input,select,textarea{width:100%;min-width:0;font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink)}
+textarea{min-height:64px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g2>div{min-width:0}@media(max-width:420px){.g2{grid-template-columns:1fr}}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.g3>div{min-width:0}.g3 label{margin-top:6px}
+.sub{font-size:12px;color:var(--sub);margin-top:4px}
+.meas{margin-top:10px;padding:10px 12px;border:1.5px dashed var(--pink);border-radius:16px;background:var(--soft)}
+.meas b{font-size:12.5px;color:var(--pinkd)}
+.cta{display:block;width:100%;margin-top:14px;text-align:center;font-weight:800;color:#fff;background:var(--grad);border:0;border-radius:999px;padding:14px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 22px -12px rgba(185,139,234,.7)}
+.cta:disabled{opacity:.55;cursor:default}
+.ghost{background:var(--paper);color:var(--pinkd);border:1.5px solid var(--pink);box-shadow:none}
+.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:800;border-radius:999px;padding:4px 10px;background:#fbe9ee;color:#c66f96;white-space:nowrap}
+.pill.lav{background:#efe6f8;color:#7d5cb0}.pill.end{background:#fbe9ee;color:#c66f96}.pill.ok{background:var(--okbg);color:var(--okfg)}
+.res h3{font-size:13px;color:var(--plum);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 6px}.res h3:first-child{margin-top:0}
+.res h3 .tools{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.copy{font:inherit;font-size:11.5px;font-weight:800;color:var(--pinkd);background:var(--paper);border:1.5px solid var(--pink);border-radius:999px;padding:4px 10px;cursor:pointer;white-space:nowrap}
+.box{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13.5px;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+.cnt{font-size:11px;color:var(--sub);font-weight:700}
+.ex{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-top:1px dashed var(--line);font-size:13px}.ex:first-child{border-top:0}
+.ex b{flex:none;color:var(--plum);font-variant-numeric:tabular-nums;min-width:68px}.ex span{min-width:0;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:12.5px;font-weight:700;color:var(--plum);background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--grad);color:#fff;border-color:transparent}
+.check{font-size:13px;padding:6px 0;border-top:1px dashed var(--line)}.check:first-child{border-top:0}
+.note{font-size:11.5px;color:var(--sub);margin-top:8px}
+.note.strong{color:var(--pinkd);font-weight:800}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.btns .cta{margin-top:0;padding:12px;font-size:13.5px}
+.err{font-size:13px;color:#b8412a;margin-top:8px;font-weight:700}
+.fab{position:fixed;left:12px;bottom:14px;font-size:11px;font-weight:800;color:var(--pinkd);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:7px 12px;box-shadow:var(--shadow);z-index:50}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hud"><img src="../logo.png" alt="Re:che"><div style="min-width:0;flex:1"><b>おたすけ らいと君</b><small>商品の情報から、出品文と値付けの下書きをつくります</small></div><span class="pill lav" id="trialPill" style="margin-left:auto">お試し 残り5回</span></div>
+
+  <div class="card"><div class="row"><span class="buddy" id="buddy"></span><div class="bubble" id="greet">こんにちは。出品先を選んで、商品のことを教えてください。タイトル・説明文・ハッシュタグ・価格の目安まで、いっしょに作ります。</div></div></div>
+
+  <div class="card" id="form">
+    <label>出品先</label>
+    <div class="seg" id="seg"><button type="button" class="on" data-p="mercari">メルカリ出品</button><button type="button" data-p="yahoo">ヤフオク出品</button></div>
+    <div class="g2">
+      <div><label for="f-brand">ブランド名</label><input id="f-brand" list="dl-brand" autocomplete="off"></div>
+      <div><label for="f-item">アイテム名<em>必須</em></label><input id="f-item" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-color">カラー</label><input id="f-color" list="dl-color" autocomplete="off"></div>
+      <div><label for="f-sizeLabel">表記サイズ</label><input id="f-sizeLabel" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-material">素材</label><input id="f-material" list="dl-material" autocomplete="off"></div>
+      <div><label for="f-condition">状態</label><select id="f-condition"></select></div>
+    </div>
+    <div class="meas" id="meas" hidden><b id="measTitle">採寸（平置き・cm）</b><div class="g3" id="measGrid"></div></div>
+    <label for="f-damage">傷・汚れ<em>あれば</em></label><textarea id="f-damage"></textarea>
+    <div class="g2">
+      <div><label for="f-model">型番<em>任意</em></label><input id="f-model" autocomplete="off"></div>
+      <div><label for="f-refPrice">参考価格（定価・円）<em>任意</em></label><input id="f-refPrice" inputmode="numeric" autocomplete="off"></div>
+    </div>
+    <div class="g2">
+      <div><label for="f-accessories">付属品<em>任意</em></label><input id="f-accessories" autocomplete="off"></div>
+      <div><label for="f-purchasedFrom">購入先<em>任意</em></label><input id="f-purchasedFrom" autocomplete="off"></div>
+    </div>
+    <label for="f-features">その他の特徴<em>任意</em></label><textarea id="f-features"></textarea>
+    <div id="chipsWrap" hidden><label>この商品に当てはまるもの<em>タップで選ぶとタイトルに入ります。当てはまらないものは選ばないでください</em></label><div class="chips" id="chips"></div></div>
+    <label for="f-cost">仕入れ値（円）<em>任意・見込みの差額を出すだけに使います</em></label><input id="f-cost" inputmode="numeric" placeholder="例）1200" autocomplete="off">
+    <button class="cta" id="go" type="button">下書きをつくる</button>
+    <div class="err" id="err" hidden></div>
+    <datalist id="dl-brand"></datalist><datalist id="dl-color"></datalist><datalist id="dl-material"></datalist>
+  </div>
+
+  <div class="card" id="trialEnd" hidden><div class="row"><span class="buddy" id="buddy2"></span><div class="bubble">5回分のお試しは、ここまでです☺️<br>お使いいただき、ありがとうございました。<br><span id="trialEndMsg">作った下書きは、上の「コピー」からいつでも取り出せます。</span></div></div></div>
+  <div class="card res" id="result" hidden></div>
+  <div class="card" id="dbg" hidden><b style="font-size:12px;color:var(--plum)">デバッグ</b><pre id="dbgLog" style="font-size:11px;white-space:pre-wrap;word-break:break-word;margin-top:6px"></pre></div>
+
+  <div class="note" style="text-align:center;margin-top:14px">価格は目安です。同じ商品の売り切れ相場を確かめてから決めてください。入れた情報は、この画面の中だけで使います。<br>お試し版は、この端末（ブラウザ）で5回まで下書きを作れます。</div>
+</div>
+<span class="fab" id="fab">困ったときはRe:che専用LINEへ</span>
+<script src="../dict/dictionaries.js?v=20261106a"></script>
+<script src="../ref/bench_ex.js?v=20261106a"></script>
+<script src="../engine.js?v=20261106a"></script>
+<script src="app.js?v=20261106a"></script>
+</body>
+</html>
